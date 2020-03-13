@@ -1,3 +1,6 @@
+# we dont use yarn
+yarn.lock
+
 # Logs
 logs
 *.log
