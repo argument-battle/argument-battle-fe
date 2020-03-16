@@ -18,7 +18,10 @@ async function create(req, res) {
         await User.create(user);
         res.status(201).send({ message: 'Success' });
     } catch (error) {
-        res.status(500).send({ error });
+        if (error.sql) {
+            res.status(400).send({ errors: error.errors });
+        }
+        res.status(500).send({ errors: [error] });
     }
 }
 
@@ -48,7 +51,10 @@ async function login(req, res) {
             message: 'Success'
         });
     } catch (error) {
-        res.status(500).send({ error });
+        if (error.sql) {
+            res.status(400).send({ errors: error.errors });
+        }
+        res.status(500).send({ errors: [error] });
     }
 }
 
