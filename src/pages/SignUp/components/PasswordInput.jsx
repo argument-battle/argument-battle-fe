@@ -10,34 +10,15 @@ import {
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import { useField } from 'react-form';
 import useStyles from '../styles/Input';
+import startCase from 'lodash.startcase';
 
-const validate = (value, instance) => {
-    if (!value) {
-        return 'Password is required';
-    }
-
-    const {
-        values: { confirmPassword },
-        __fieldMeta: {
-            confirmPassword: { isTouched }
-        },
-        runValidation
-    } = instance.form;
-    if (isTouched && value !== confirmPassword) {
-        runValidation();
-        return 'Passwords must match';
-    }
-
-    return false;
-};
-
-const PasswordInput = () => {
+const PasswordInput = ({ validate, label }) => {
     const classes = useStyles();
 
     const {
         meta: { error },
         getInputProps
-    } = useField('password', {
+    } = useField(label, {
         defaultValue: '',
         validate
     });
@@ -48,9 +29,9 @@ const PasswordInput = () => {
 
     return (
         <FormControl variant="outlined" fullWidth error={!!error} required>
-            <InputLabel htmlFor={'password'}>Password</InputLabel>
+            <InputLabel htmlFor={label}>{startCase(label)}</InputLabel>
             <OutlinedInput
-                id={'password'}
+                id={label}
                 className={classes.input}
                 type={shouldShowPassword ? 'text' : 'password'}
                 endAdornment={
@@ -65,7 +46,7 @@ const PasswordInput = () => {
                         </IconButton>
                     </InputAdornment>
                 }
-                label={'password'}
+                label={label}
                 {...getInputProps()}
             />
             <FormHelperText className={classes.helperText}>{error}</FormHelperText>

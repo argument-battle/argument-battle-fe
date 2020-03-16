@@ -2,13 +2,9 @@ import React from 'react';
 import { FormControl, InputLabel, OutlinedInput, FormHelperText } from '@material-ui/core';
 import { useField } from 'react-form';
 import useStyles from '../styles/Input';
+import startCase from 'lodash.startcase';
 
-const validate = value => {
-    if (!value) return 'Username is required';
-    return false;
-};
-
-const UsernameInput = () => {
+const Input = ({ validate, label }) => {
     const classes = useStyles();
 
     const {
@@ -21,10 +17,10 @@ const UsernameInput = () => {
 
     return (
         <FormControl variant="outlined" fullWidth error={!!error} required>
-            <InputLabel htmlFor="username">Username</InputLabel>
+            <InputLabel htmlFor={label}>{startCase(label)}</InputLabel>
             <OutlinedInput
-                id="username"
-                label="username"
+                id={label}
+                label={label}
                 className={classes.input}
                 {...getInputProps()}
             />
@@ -33,4 +29,4 @@ const UsernameInput = () => {
     );
 };
 
-export { UsernameInput };
+export { Input };
