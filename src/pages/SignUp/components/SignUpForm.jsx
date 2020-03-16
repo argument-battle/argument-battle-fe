@@ -25,7 +25,7 @@ const validate = field => (value, instance) => {
                 setFieldMeta(dependentField, prevMeta => ({ ...prevMeta, error }));
                 return error;
             } else {
-                if (value === null) {
+                if (!value) {
                     setFieldMeta(dependentField, prevMeta => ({
                         ...prevMeta,
                         error: isRequiredError
