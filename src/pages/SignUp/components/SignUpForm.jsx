@@ -66,8 +66,7 @@ const SignUpForm = ({ routerHistory }) => {
         meta: { isSubmitting, canSubmit }
     } = useForm({
         onSubmit: handleSubmit,
-        validate,
-        debugForm: true
+        validate
     });
 
     return (
