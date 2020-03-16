@@ -5,7 +5,7 @@ import useStyles from '../styles/FormHeader';
 const FormHeader = () => {
     const classes = useStyles();
     return (
-        <Box className={classes.root}>
+        <Box className={classes.header}>
             <Typography variant="h4" component="h1">
                 SIGN UP
             </Typography>

@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(theme => ({
-    root: {
+    header: {
         backgroundColor: theme.palette.common.black,
         color: theme.palette.common.white,
         paddingTop: theme.spacing(2),

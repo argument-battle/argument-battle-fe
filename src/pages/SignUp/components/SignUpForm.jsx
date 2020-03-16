@@ -15,7 +15,6 @@ const handleSubmitErrors = (errors, instance) => {
                 ...prevMeta,
                 error: message
             }));
-            console.error(message);
         }
     });
 };
