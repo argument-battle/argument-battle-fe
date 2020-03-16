@@ -21,6 +21,10 @@ const validate = field => (value, instance) => {
         const { isTouched } = __fieldMeta[dependentField];
         if (isTouched) {
             if (value !== values[dependentField]) {
+                const error = 'Passwords must match';
+                setFieldMeta(dependentField, prevMeta => ({ ...prevMeta, error }));
+                return error;
+            } else {
                 if (value === null) {
                     setFieldMeta(dependentField, prevMeta => ({
                         ...prevMeta,
@@ -28,10 +32,6 @@ const validate = field => (value, instance) => {
                     }));
                     return isRequiredError;
                 }
-                const error = 'Passwords must match';
-                setFieldMeta(dependentField, prevMeta => ({ ...prevMeta, error }));
-                return error;
-            } else {
                 setFieldMeta(dependentField, prevMeta => ({ ...prevMeta, error: null }));
             }
         }
