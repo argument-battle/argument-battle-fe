@@ -2,14 +2,13 @@ import React, { useEffect, useContext } from 'react';
 import { LayoutDataContext } from '../../layout';
 import { Typography, Container } from '@material-ui/core';
 
-const BattlePage = () => {
+const NotFoundPage = () => {
     const { initializeLayout } = useContext(LayoutDataContext);
     useEffect(() => initializeLayout(), []);
     return (
         <Container component="main">
-            <Typography>BattlePage</Typography>
+            <Typography>404 Not Found Page</Typography>
         </Container>
     );
 };
-
-export { BattlePage };
+export { NotFoundPage };
