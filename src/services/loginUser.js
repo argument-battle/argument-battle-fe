@@ -1,5 +1,5 @@
-const postUser = async ({ username, password }) => {
-    const response = await fetch('/api/users', {
+const loginUser = async ({ username, password }) => {
+    const response = await fetch('/api/users/login', {
         method: 'POST',
         body: JSON.stringify({ username, password }),
         headers: { 'Content-Type': 'application/json' }
@@ -7,4 +7,4 @@ const postUser = async ({ username, password }) => {
     return await response.json();
 };
 
-export { postUser };
+export { loginUser };
