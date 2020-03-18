@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormControl, InputLabel, OutlinedInput, FormHelperText } from '@material-ui/core';
-import useStyles from '../styles/Input';
+import useStyles from './styles/Input';
 import startCase from 'lodash.startcase';
 
 const Input = ({ label, error, onChange, onBlur, value }) => {

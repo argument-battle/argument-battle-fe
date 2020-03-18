@@ -1,4 +1,5 @@
 import React, { createContext, useState, useCallback } from 'react';
+import { SnackbarProvider } from 'notistack';
 import { NavBar } from './NavBar';
 
 const LayoutDataContext = createContext(null);
@@ -18,8 +19,10 @@ const Layout = ({ children }) => {
     );
     return (
         <LayoutDataContext.Provider value={{ pageSettings, initializeLayout }}>
-            {!pageSettings.shouldHideNavBar && <NavBar />}
-            {children}
+            <SnackbarProvider maxSnack={3}>
+                {!pageSettings.shouldHideNavBar && <NavBar />}
+                {children}
+            </SnackbarProvider>
         </LayoutDataContext.Provider>
     );
 };

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
-import { Input } from './Input';
-import { PasswordInput } from './PasswordInput';
-import { FormHeader } from './FormHeader';
+
+import { Input, PasswordInput, SubmitInput } from '../../../shared/components/Inputs';
+import { Form } from '../../../shared/components/Form';
 import { FormFooter } from './FormFooter';
 import { postUser } from '../../../services/postUser';
 
@@ -42,46 +41,33 @@ const SignUpForm = ({ routerHistory }) => {
     const { username, password, confirmPassword } = inputs;
 
     return (
-        <>
-            <FormHeader />
-            <form onSubmit={handleSubmit}>
-                <Input
-                    label={'username'}
-                    value={username.value}
-                    onChange={setValue}
-                    error={username.error}
-                    onBlur={validateInput}
-                />
-                <PasswordInput
-                    label={'password'}
-                    value={password.value}
-                    onChange={setValue}
-                    error={password.error}
-                    onBlur={() => {
-                        validateInput('password');
-                        validateInput('confirmPassword');
-                    }}
-                />
-                <PasswordInput
-                    label={'confirmPassword'}
-                    value={confirmPassword.value}
-                    onChange={setValue}
-                    error={confirmPassword.error}
-                    onBlur={validateInput}
-                />
-                <Button
-                    fullWidth
-                    variant="contained"
-                    color="secondary"
-                    size="large"
-                    type="submit"
-                    disabled={isSubmitting}
-                >
-                    Submit
-                </Button>
-            </form>
-            <FormFooter />
-        </>
+        <Form onSubmit={handleSubmit} header="SIGN UP" footer={FormFooter}>
+            <Input
+                label={'username'}
+                value={username.value}
+                onChange={setValue}
+                error={username.error}
+                onBlur={validateInput}
+            />
+            <PasswordInput
+                label={'password'}
+                value={password.value}
+                onChange={setValue}
+                error={password.error}
+                onBlur={() => {
+                    validateInput('password');
+                    validateInput('confirmPassword');
+                }}
+            />
+            <PasswordInput
+                label={'confirmPassword'}
+                value={confirmPassword.value}
+                onChange={setValue}
+                error={confirmPassword.error}
+                onBlur={validateInput}
+            />
+            <SubmitInput disabled={isSubmitting} value="Submit" />
+        </Form>
     );
 };
 

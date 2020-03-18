@@ -8,7 +8,7 @@ import {
     FormHelperText
 } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import useStyles from '../styles/Input';
+import useStyles from './styles/Input';
 import startCase from 'lodash.startcase';
 
 const PasswordInput = ({ label, error, onChange, onBlur, value }) => {
