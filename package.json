@@ -38,10 +38,10 @@
         "lodash.startcase": "^4.4.0",
         "react": "^16.0.0",
         "react-dom": "^16.13.0",
-        "react-form": "^4.0.1",
         "react-router-dom": "^5.1.2",
         "sequelize": "^5.21.5",
-        "sqlite3": "^4.1.1"
+        "sqlite3": "^4.1.1",
+        "yup": "^0.28.3"
     },
     "devDependencies": {
         "@babel/core": "^7.8.7",

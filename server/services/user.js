@@ -19,7 +19,7 @@ async function create(req, res) {
         res.status(201).send({ message: 'Success' });
     } catch (error) {
         if (error.sql) {
-            res.status(400).send({ errors: error.errors });
+            return res.status(400).send({ errors: error.errors });
         }
         res.status(500).send({ errors: [error] });
     }

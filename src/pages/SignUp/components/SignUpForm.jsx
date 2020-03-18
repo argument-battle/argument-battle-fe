@@ -1,92 +1,85 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { Input } from './Input';
 import { PasswordInput } from './PasswordInput';
 import { FormHeader } from './FormHeader';
 import { FormFooter } from './FormFooter';
-import { useForm } from 'react-form';
 import { postUser } from '../../../services/postUser';
-import startCase from 'lodash.startcase';
 
-const validate = field => (value, instance) => {
-    const isRequiredError = `${startCase(field)} is required`;
-    if (!value) {
-        return isRequiredError;
-    }
-
-    const passwordFieldMap = { password: 'confirmPassword', confirmPassword: 'password' };
-    if (Object.keys(passwordFieldMap).includes(field)) {
-        const { values, __fieldMeta, setFieldMeta } = instance.form;
-        const dependentField = passwordFieldMap[field];
-        const { isTouched } = __fieldMeta[dependentField];
-        if (isTouched) {
-            if (value !== values[dependentField]) {
-                const error = 'Passwords must match';
-                setFieldMeta(dependentField, prevMeta => ({ ...prevMeta, error }));
-                return error;
-            } else {
-                if (!value) {
-                    setFieldMeta(dependentField, prevMeta => ({
-                        ...prevMeta,
-                        error: isRequiredError
-                    }));
-                    return isRequiredError;
-                }
-                setFieldMeta(dependentField, prevMeta => ({ ...prevMeta, error: null }));
-            }
-        }
-    }
-
-    return false;
-};
-
-const handleSubmitErrors = (errors, instance) => {
-    errors.forEach(({ type, path, message }) => {
-        if (type === 'unique violation' && path === 'username') {
-            instance.setFieldMeta('username', prevMeta => ({
-                ...prevMeta,
-                error: message
-            }));
-        }
-    });
-};
+import useForm from '../../../shared/hooks/useForm';
+import validationSchema from '../validationSchema';
 
 const SignUpForm = ({ routerHistory }) => {
-    const handleSubmit = async (values, instance) => {
+    const [inputs, { setValue, validateInput, validateInputs, getValues, setError }] = useForm(
+        { username: '', password: '', confirmPassword: '' },
+        validationSchema
+    );
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleSubmit = async event => {
+        event.preventDefault();
+
+        const isValid = await validateInputs();
+        if (!isValid) {
+            return;
+        }
+
+        setIsSubmitting(true);
+        const values = getValues();
         const response = await postUser(values);
+        setIsSubmitting(false);
+
         if (response.errors) {
-            handleSubmitErrors(response.errors, instance);
+            const { path, type } = response.errors[0];
+            if (path === 'username' && type === 'unique violation') {
+                setError({ name: 'username', value: 'Username is already taken' });
+            }
             return;
         }
         routerHistory.push('/');
     };
 
-    const {
-        Form,
-        meta: { isSubmitting, canSubmit }
-    } = useForm({
-        onSubmit: handleSubmit,
-        validate
-    });
+    const { username, password, confirmPassword } = inputs;
 
     return (
         <>
             <FormHeader />
-            <Form noValidate>
-                <Input validate={validate('username')} label={'username'} />
-                <PasswordInput validate={validate('password')} label={'password'} />
-                <PasswordInput validate={validate('confirmPassword')} label={'confirmPassword'} />
+            <form onSubmit={handleSubmit}>
+                <Input
+                    label={'username'}
+                    value={username.value}
+                    onChange={setValue}
+                    error={username.error}
+                    onBlur={validateInput}
+                />
+                <PasswordInput
+                    label={'password'}
+                    value={password.value}
+                    onChange={setValue}
+                    error={password.error}
+                    onBlur={() => {
+                        validateInput('password');
+                        validateInput('confirmPassword');
+                    }}
+                />
+                <PasswordInput
+                    label={'confirmPassword'}
+                    value={confirmPassword.value}
+                    onChange={setValue}
+                    error={confirmPassword.error}
+                    onBlur={validateInput}
+                />
                 <Button
                     fullWidth
                     variant="contained"
                     color="secondary"
                     size="large"
                     type="submit"
-                    disabled={!canSubmit || isSubmitting}
+                    disabled={isSubmitting}
                 >
                     Submit
                 </Button>
-            </Form>
+            </form>
             <FormFooter />
         </>
     );
