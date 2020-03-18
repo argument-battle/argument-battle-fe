@@ -1,28 +1,27 @@
 import React from 'react';
 import { FormControl, InputLabel, OutlinedInput, FormHelperText } from '@material-ui/core';
-import { useField } from 'react-form';
 import useStyles from '../styles/Input';
 import startCase from 'lodash.startcase';
 
-const Input = ({ validate, label }) => {
+const Input = ({ label, error, onChange, onBlur, value }) => {
     const classes = useStyles();
 
-    const {
-        meta: { error },
-        getInputProps
-    } = useField('username', {
-        defaultValue: '',
-        validate
-    });
+    function handleChange(event) {
+        const { name, value } = event.target;
+        onChange({ name, value });
+    }
 
     return (
-        <FormControl variant="outlined" fullWidth error={!!error} required>
+        <FormControl variant="outlined" fullWidth error={!!error}>
             <InputLabel htmlFor={label}>{startCase(label)}</InputLabel>
             <OutlinedInput
                 id={label}
                 label={label}
+                name={label}
                 className={classes.input}
-                {...getInputProps()}
+                onChange={handleChange}
+                onBlur={e => onBlur(e.target.name)}
+                value={value}
             />
             <FormHelperText className={classes.helperText}>{error}</FormHelperText>
         </FormControl>

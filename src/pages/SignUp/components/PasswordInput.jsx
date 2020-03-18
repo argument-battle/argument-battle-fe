@@ -8,32 +8,30 @@ import {
     FormHelperText
 } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import { useField } from 'react-form';
 import useStyles from '../styles/Input';
 import startCase from 'lodash.startcase';
 
-const PasswordInput = ({ validate, label }) => {
+const PasswordInput = ({ label, error, onChange, onBlur, value }) => {
     const classes = useStyles();
-
-    const {
-        meta: { error },
-        getInputProps
-    } = useField(label, {
-        defaultValue: '',
-        validate
-    });
 
     const [shouldShowPassword, setShouldShowPassword] = useState(false);
 
     const toggleShouldShowPassword = () => setShouldShowPassword(!shouldShowPassword);
 
+    function handleChange(event) {
+        const { name, value } = event.target;
+        onChange({ name, value });
+    }
+
     return (
-        <FormControl variant="outlined" fullWidth error={!!error} required>
+        <FormControl variant="outlined" fullWidth error={!!error}>
             <InputLabel htmlFor={label}>{startCase(label)}</InputLabel>
             <OutlinedInput
                 id={label}
                 className={classes.input}
                 type={shouldShowPassword ? 'text' : 'password'}
+                name={label}
+                value={value}
                 endAdornment={
                     <InputAdornment position="end">
                         <IconButton
@@ -47,7 +45,9 @@ const PasswordInput = ({ validate, label }) => {
                     </InputAdornment>
                 }
                 label={label}
-                {...getInputProps()}
+                onChange={handleChange}
+                onBlur={e => onBlur(e.target.name)}
+                autoComplete="on"
             />
             <FormHelperText className={classes.helperText}>{error}</FormHelperText>
         </FormControl>

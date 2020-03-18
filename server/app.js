@@ -14,7 +14,7 @@ const bundler = new Bundler(entryFiles, { sourceMaps: !isProd });
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(router);
+app.use('/api', router);
 
 app.use(bundler.middleware());
 
