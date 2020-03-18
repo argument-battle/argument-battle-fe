@@ -28,9 +28,10 @@ const SignUpForm = ({ routerHistory }) => {
         const response = await postUser(values);
         setIsSubmitting(false);
 
-        if (response.errors) {
-            const { path, type } = response.errors[0];
-            if (path === 'username' && type === 'unique violation') {
+        if (response.error) {
+            const error = response.error.errmsg || '';
+            const isUsernameDuplicate = ['username', 'duplicate'].every(el => error.includes(el));
+            if (isUsernameDuplicate) {
                 setError({ name: 'username', value: 'Username is already taken' });
             }
             return;
