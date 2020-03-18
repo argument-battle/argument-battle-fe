@@ -37,12 +37,11 @@
         "express": "^4.17.1",
         "jsonwebtoken": "^8.5.1",
         "lodash.startcase": "^4.4.0",
+        "mongoose": "^5.9.5",
         "notistack": "^0.9.9",
         "react": "^16.0.0",
         "react-dom": "^16.13.0",
         "react-router-dom": "^5.1.2",
-        "sequelize": "^5.21.5",
-        "sqlite3": "^4.1.1",
         "yup": "^0.28.3"
     },
     "devDependencies": {
