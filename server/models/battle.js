@@ -9,8 +9,8 @@ const battleSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
-        enum: ['active', 'waiting', 'ended'],
-        default: 'waiting'
+        enum: ['active', 'lobby', 'ended'],
+        default: 'lobby'
     },
     attacker: { type: ObjectId, ref: 'User' },
     defender: { type: ObjectId, ref: 'User', required: true },
