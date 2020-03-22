@@ -1,5 +1,4 @@
-const Router = require('express').Router;
-
+const { Router } = require('express');
 const { getAll, create, login } = require('../services/user');
 
 const router = new Router();

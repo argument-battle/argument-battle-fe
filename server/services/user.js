@@ -16,7 +16,7 @@ async function create(req, res) {
         await user.save();
         res.status(201).send({ message: 'Success' });
     } catch (error) {
-        res.status(400).send({ error }); //TODO: fix register
+        res.status(400).send({ error });
     }
 }
 

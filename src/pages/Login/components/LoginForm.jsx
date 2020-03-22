@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-
 import { Input, PasswordInput, SubmitInput } from '../../../shared/components/Inputs';
 import { Form } from '../../../shared/components/Form';
 import { FormFooter } from './FormFooter';

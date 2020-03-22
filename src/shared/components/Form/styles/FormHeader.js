@@ -9,6 +9,9 @@ export default makeStyles(theme => ({
         paddingLeft: theme.spacing(6),
         paddingRight: theme.spacing(6),
         marginBottom: theme.spacing(2),
-        textAlign: 'center'
+        textAlign: 'center',
+        width: 'fit-content',
+        marginLeft: 'auto',
+        marginRight: 'auto'
     }
 }));
