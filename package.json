@@ -5,10 +5,7 @@
     "main": "server/index.js",
     "scripts": {
         "start": "env NODE_ENV=production node server",
-        "dev": "env NODE_ENV=development nodemon server",
-        "seed:db": "sequelize-cli db:seed:all",
-        "seeds:undo": "sequelize-cli db:seed:undo:all",
-        "seed:create": "sequelize-cli seed:generate"
+        "dev": "env NODE_ENV=development nodemon server"
     },
     "repository": {
         "type": "git",
@@ -23,8 +20,7 @@
     "nodemonConfig": {
         "ignore": [
             "dist/*",
-            "src/*",
-            "argument_battle_db.sqlite"
+            "src/*"
         ]
     },
     "dependencies": {
@@ -55,7 +51,6 @@
         "eslint-plugin-react-hooks": "^2.5.0",
         "nodemon": "^2.0.2",
         "parcel-bundler": "^1.12.4",
-        "prettier": "^1.19.1",
-        "sequelize-cli": "^5.5.1"
+        "prettier": "^1.19.1"
     }
 }
