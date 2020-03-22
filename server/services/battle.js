@@ -1,4 +1,4 @@
-const Battle = require('../models/battle');
+const { Battle } = require('../models/battle');
 
 async function create(req, res) {
     const { title } = req.body;

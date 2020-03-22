@@ -3,14 +3,14 @@ import React, { useState } from 'react';
 import { Input, PasswordInput, SubmitInput } from '../../../shared/components/Inputs';
 import { Form } from '../../../shared/components/Form';
 import { FormFooter } from './FormFooter';
-import { postUser } from '../../../services/postUser';
+import { postUser } from '../../../services/User';
 
 import useForm from '../../../shared/hooks/useForm';
 import validationSchema from '../validationSchema';
 
 const SignUpForm = ({ routerHistory }) => {
     const [inputs, { setValue, validateInput, validateInputs, getValues, setError }] = useForm(
-        { username: '', password: '', confirmPassword: '' },
+        { username: '', email: '', password: '', confirmPassword: '' },
         validationSchema
     );
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,25 +33,41 @@ const SignUpForm = ({ routerHistory }) => {
             const isUsernameDuplicate = ['username', 'duplicate'].every(el => error.includes(el));
             if (isUsernameDuplicate) {
                 setError({ name: 'username', value: 'Username is already taken' });
+                return;
+            }
+            const isEmailDuplicate = ['email', 'duplicate'].every(el => error.includes(el));
+            if (isEmailDuplicate) {
+                setError({ name: 'email', value: 'Email is already taken' });
+                return;
             }
             return;
         }
         routerHistory.push('/');
     };
 
-    const { username, password, confirmPassword } = inputs;
+    const { username, email, password, confirmPassword } = inputs;
 
     return (
         <Form onSubmit={handleSubmit} header="SIGN UP" footer={FormFooter}>
             <Input
-                label={'username'}
+                label="username"
                 value={username.value}
                 onChange={setValue}
                 error={username.error}
                 onBlur={validateInput}
+                required
+            />
+            <Input
+                label="email"
+                value={email.value}
+                onChange={setValue}
+                error={email.error}
+                onBlur={validateInput}
+                type="email"
+                required
             />
             <PasswordInput
-                label={'password'}
+                label="password"
                 value={password.value}
                 onChange={setValue}
                 error={password.error}
@@ -59,13 +75,15 @@ const SignUpForm = ({ routerHistory }) => {
                     validateInput('password');
                     validateInput('confirmPassword');
                 }}
+                required
             />
             <PasswordInput
-                label={'confirmPassword'}
+                label="confirmPassword"
                 value={confirmPassword.value}
                 onChange={setValue}
                 error={confirmPassword.error}
                 onBlur={validateInput}
+                required
             />
             <SubmitInput disabled={isSubmitting} value="Submit" />
         </Form>

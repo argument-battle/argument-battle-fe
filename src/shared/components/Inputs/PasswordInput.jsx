@@ -11,7 +11,7 @@ import { Visibility, VisibilityOff } from '@material-ui/icons';
 import useStyles from './styles/Input';
 import startCase from 'lodash.startcase';
 
-const PasswordInput = ({ label, error, onChange, onBlur, value }) => {
+const PasswordInput = ({ label, error, onChange, onBlur, value, required }) => {
     const classes = useStyles();
 
     const [shouldShowPassword, setShouldShowPassword] = useState(false);
@@ -24,7 +24,7 @@ const PasswordInput = ({ label, error, onChange, onBlur, value }) => {
     }
 
     return (
-        <FormControl variant="outlined" fullWidth error={!!error}>
+        <FormControl variant="outlined" fullWidth error={!!error} required={required}>
             <InputLabel htmlFor={label}>{startCase(label)}</InputLabel>
             <OutlinedInput
                 id={label}

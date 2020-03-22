@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Input, PasswordInput, SubmitInput } from '../../../shared/components/Inputs';
 import { Form } from '../../../shared/components/Form';
 import { FormFooter } from './FormFooter';
-import { loginUser } from '../../../services/loginUser';
+import { loginUser } from '../../../services/User';
 import { useSnackbar } from 'notistack';
 import { pushErrorMessageFactory } from '../../../shared/components/Snack';
 

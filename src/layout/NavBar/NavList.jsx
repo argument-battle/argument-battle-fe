@@ -2,7 +2,7 @@ import React from 'react';
 import { List, ListItemIcon, ListItemText, Divider, ListItem } from '@material-ui/core';
 import { Search, Add } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
-import { PAGE_PATHS } from '../Router';
+import { PAGE_PATHS } from '../../Router';
 import { ActiveBattles } from './ActiveBattles';
 
 const mockedBattles = [

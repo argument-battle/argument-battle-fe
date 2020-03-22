@@ -26,11 +26,13 @@
     "dependencies": {
         "@material-ui/core": "^4.9.5",
         "@material-ui/icons": "^4.9.1",
+        "@material-ui/lab": "^4.0.0-alpha.46",
         "bcryptjs": "^2.4.3",
         "clsx": "^1.1.0",
         "cookie-parser": "^1.4.4",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
+        "gravatar": "^1.8.0",
         "jsonwebtoken": "^8.5.1",
         "lodash.startcase": "^4.4.0",
         "mongoose": "^5.9.5",
