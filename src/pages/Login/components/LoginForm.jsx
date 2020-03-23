@@ -1,15 +1,16 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { Input, PasswordInput, SubmitInput } from '../../../shared/components/Inputs';
 import { Form } from '../../../shared/components/Form';
 import { FormFooter } from './FormFooter';
 import { useSnackbar } from 'notistack';
 import { pushErrorMessageFactory } from '../../../shared/components/Snack';
-import { loginUser } from '../../../services/User';
+import { UserContext } from '../../../providers/user';
 
 import useForm from '../../../shared/hooks/useForm';
 import validationSchema from '../validationSchema';
 
-const LoginForm = () => {
+const LoginForm = ({ routerHistory }) => {
+    const { loginUser } = useContext(UserContext);
     const [inputs, { setValue, validateInput, validateInputs, getValues }] = useForm(
         { username: '', password: '' },
         validationSchema
@@ -38,7 +39,7 @@ const LoginForm = () => {
         if (response.error) {
             pushErrorMessage('Login failed, wrong user credentials');
         } else {
-            window.location = '/';
+            routerHistory.push('/');
         }
     };
 
