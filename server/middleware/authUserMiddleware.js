@@ -1,26 +1,15 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const getUserMiddleware = require('./getUserMiddleware');
 
-async function authUserMiddleware(req, res, next) {
-    const userToken = req.cookies['user_token'];
-
-    try {
-        if (!userToken) {
-            throw new Error();
-        }
-
-        const { username } = jwt.verify(userToken, process.env.JWT_KEY);
-        const user = await User.findOne({ username });
+const authUserMiddleware = [
+    getUserMiddleware,
+    (req, res, next) => {
+        const { user } = res.locals;
         if (user) {
-            res.locals.user = user;
+            next();
         } else {
-            throw new Error();
+            res.status(401).send({ error: 'Unauthorized' });
         }
-
-        next();
-    } catch {
-        res.status(401).send({ error: 'Unauthorized' });
     }
-}
+];
 
 module.exports = authUserMiddleware;

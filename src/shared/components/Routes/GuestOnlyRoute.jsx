@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { isLoggedIn } from '../isLoggedIn';
+import { UserContext } from '../../../providers/user';
 
 const GuestOnlyRoute = props => {
-    const { component: Component, redirectTo = '/', ...rest } = props;
+    const { component: Component, ...rest } = props;
+    const { user } = useContext(UserContext);
 
     return (
         <Route
             {...rest}
-            render={props =>
-                !isLoggedIn() ? <Component {...props} /> : <Redirect to={redirectTo} />
-            }
+            render={props => (user.isGuest ? <Component {...props} /> : <Redirect to="/" />)}
         />
     );
 };

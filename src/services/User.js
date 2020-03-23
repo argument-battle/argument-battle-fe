@@ -7,7 +7,7 @@ const postUser = async ({ username, email, password }) => {
     return await response.json();
 };
 
-const getGuestUser = async () => {
+const getGuest = async () => {
     const response = await fetch('/api/users/guest', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
@@ -15,7 +15,7 @@ const getGuestUser = async () => {
     return await response.json();
 };
 
-const getMeUser = async () => {
+const getMe = async () => {
     const response = await fetch('/api/users/me', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', credentials: 'include' }
@@ -23,7 +23,7 @@ const getMeUser = async () => {
     return await response.json();
 };
 
-const logOutUser = async () => {
+const logoutUser = async () => {
     const response = await fetch('/api/users/logout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', credentials: 'include' }
@@ -40,4 +40,4 @@ const loginUser = async ({ username, password }) => {
     return await response.json();
 };
 
-export { postUser, getGuestUser, getMeUser, logOutUser, loginUser };
+export { postUser, getGuest, getMe, logoutUser, loginUser };

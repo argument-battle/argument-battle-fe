@@ -9,7 +9,7 @@ async function getAll(req, res) {
 }
 
 function getMe(req, res) {
-    res.status(200).send(res.locals.user);
+    res.status(200).send({ user: res.locals.user });
 }
 
 async function getGuest(req, res) {
@@ -79,7 +79,7 @@ async function login(req, res) {
 
 async function logout(req, res) {
     res.clearCookie('user_token');
-    res.status(201).send({ message: 'Success' });
+    res.status(200).send({ message: 'Success' });
 }
 
 module.exports = { getAll, getGuest, getMe, get, create, login, logout };

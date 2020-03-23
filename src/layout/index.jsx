@@ -1,6 +1,8 @@
-import React, { createContext, useState, useCallback } from 'react';
+import React, { createContext, useState, useCallback, useContext, useEffect } from 'react';
 import { SnackbarProvider } from 'notistack';
 import { NavBar } from './NavBar';
+import { UserContext } from '../providers/user';
+import { Spinner } from '../shared/components/Spinner';
 
 const LayoutDataContext = createContext(null);
 
@@ -17,11 +19,28 @@ const Layout = ({ children }) => {
         },
         [setPageSettings]
     );
+
+    const { user, getUser, logoutUser } = useContext(UserContext);
+
+    useEffect(() => {
+        if (!user) {
+            getUser();
+        }
+    }, [user, getUser]);
+
     return (
         <LayoutDataContext.Provider value={{ pageSettings, initializeLayout }}>
             <SnackbarProvider maxSnack={3}>
-                {!pageSettings.shouldHideNavBar && <NavBar />}
-                {children}
+                {user ? (
+                    <>
+                        {!pageSettings.shouldHideNavBar && (
+                            <NavBar user={user} logoutUser={logoutUser} />
+                        )}
+                        {children}
+                    </>
+                ) : (
+                    <Spinner />
+                )}
             </SnackbarProvider>
         </LayoutDataContext.Provider>
     );

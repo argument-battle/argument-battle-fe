@@ -4,7 +4,7 @@ import useStyles from '../styles/NavBar';
 import { NavList } from './NavList';
 import { UserProfile } from './UserProfile';
 
-const NavBar = () => {
+const NavBar = ({ user, logoutUser }) => {
     const classes = useStyles();
     return (
         <Drawer
@@ -13,9 +13,9 @@ const NavBar = () => {
             classes={{ paper: classes.drawerPaper }}
             anchor="left"
         >
-            <UserProfile />
+            <UserProfile user={user} logoutUser={logoutUser} />
             <Divider />
-            <NavList />
+            <NavList user={user} />
         </Drawer>
     );
 };
