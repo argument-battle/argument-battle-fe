@@ -34,9 +34,9 @@ const LoginForm = ({ routerHistory }) => {
         setIsSubmitting(true);
         const values = getValues();
         const response = await loginUser(values);
-        setIsSubmitting(false);
 
         if (response.error) {
+            setIsSubmitting(false);
             pushErrorMessage('Login failed, wrong user credentials');
         } else {
             routerHistory.push('/');
