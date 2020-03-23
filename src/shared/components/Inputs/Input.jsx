@@ -3,7 +3,7 @@ import { FormControl, InputLabel, OutlinedInput, FormHelperText } from '@materia
 import useStyles from './styles/Input';
 import startCase from 'lodash.startcase';
 
-const Input = ({ label, error, onChange, onBlur, value }) => {
+const Input = ({ label, error, onChange, onBlur, value, type = 'text', required }) => {
     const classes = useStyles();
 
     function handleChange(event) {
@@ -12,12 +12,13 @@ const Input = ({ label, error, onChange, onBlur, value }) => {
     }
 
     return (
-        <FormControl variant="outlined" fullWidth error={!!error}>
+        <FormControl variant="outlined" fullWidth error={!!error} required={required}>
             <InputLabel htmlFor={label}>{startCase(label)}</InputLabel>
             <OutlinedInput
                 id={label}
                 label={label}
                 name={label}
+                type={type}
                 className={classes.input}
                 onChange={handleChange}
                 onBlur={e => onBlur(e.target.name)}

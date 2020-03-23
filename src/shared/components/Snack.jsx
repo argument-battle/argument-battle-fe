@@ -1,20 +1,16 @@
 import React from 'react';
 import clsx from 'clsx';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
-import CloseIcon from '@material-ui/icons/Close';
-import { amber, green } from '@material-ui/core/colors';
+import { Error, Info, Close, Warning, CheckCircle } from '@material-ui/icons';
 import { IconButton, Typography, Card } from '@material-ui/core';
-import WarningIcon from '@material-ui/icons/Warning';
+import { amber, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
 
 const variantIcon = {
-    success: CheckCircleIcon,
-    warning: WarningIcon,
-    error: ErrorIcon,
-    info: InfoIcon
+    success: CheckCircle,
+    warning: Warning,
+    error: Error,
+    info: Info
 };
 
 const useStyles = makeStyles(theme => ({
@@ -70,7 +66,7 @@ const Snack = React.forwardRef(function Snack(props, ref) {
             <Icon className={clsx(classes.icon, classes.iconVariant)} />
             <Typography classes={{ root: classes.message }}>{message}</Typography>
             <IconButton aria-label="close" color="inherit" onClick={handleDismiss}>
-                <CloseIcon className={clsx(classes.icon, classes.iconVariant, classes.close)} />
+                <Close className={clsx(classes.icon, classes.iconVariant, classes.close)} />
             </IconButton>
         </Card>
     );

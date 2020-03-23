@@ -6,14 +6,19 @@ import { BrowserRouter } from 'react-router-dom';
 import { Router } from './Router';
 import { Layout } from './layout';
 
+//providers
+import { UserProvider } from './providers/user';
+
 const App = () => (
     <ThemeProvider theme={MUITheme}>
         <CssBaseline />
-        <BrowserRouter>
-            <Layout>
-                <Router />
-            </Layout>
-        </BrowserRouter>
+        <UserProvider>
+            <BrowserRouter>
+                <Layout>
+                    <Router />
+                </Layout>
+            </BrowserRouter>
+        </UserProvider>
     </ThemeProvider>
 );
 
