@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
         [setPageSettings]
     );
 
-    const { user, getUser, logoutUser } = useContext(UserContext);
+    const { user, getUser } = useContext(UserContext);
 
     useEffect(() => {
         if (!user) {
@@ -33,9 +33,7 @@ const Layout = ({ children }) => {
             <SnackbarProvider maxSnack={3}>
                 {user ? (
                     <>
-                        {!pageSettings.shouldHideNavBar && (
-                            <NavBar user={user} logoutUser={logoutUser} />
-                        )}
+                        {!pageSettings.shouldHideNavBar && <NavBar />}
                         {children}
                     </>
                 ) : (
