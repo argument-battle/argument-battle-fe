@@ -16,7 +16,7 @@ async function getGuest(req, res) {
     const username = 'Guest' + Math.floor(Math.random() * Math.floor(40000));
     const avatarUrl = gravatar.url(
         `${username}@argbattle.lt`,
-        { size: '200', rating: 'x', default: 'retro' },
+        { size: '200', rating: 'x', default: 'robohash' },
         false
     );
 
@@ -36,7 +36,7 @@ async function create(req, res) {
         const hash = await bcrypt.hash(req.body.password, salt);
         const avatarUrl = gravatar.url(
             req.body.email,
-            { size: '200', rating: 'x', default: 'retro' },
+            { size: '200', rating: 'x', default: 'robohash' },
             false
         );
 
