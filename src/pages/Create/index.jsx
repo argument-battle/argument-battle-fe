@@ -4,14 +4,14 @@ import { Container } from '@material-ui/core';
 import { CreateBattleForm } from './components/CreateBattleForm';
 import useStyles from './styles/CreatePage';
 
-const CreatePage = () => {
+const CreatePage = ({ history }) => {
     const classes = useStyles();
 
     const { initializeLayout } = useContext(LayoutDataContext);
     useEffect(() => initializeLayout(), []);
     return (
         <Container component="main" maxWidth="sm" className={classes.container}>
-            <CreateBattleForm />
+            <CreateBattleForm routerHistory={history} />
         </Container>
     );
 };

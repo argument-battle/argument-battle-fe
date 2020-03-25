@@ -8,25 +8,19 @@ const postUser = async ({ username, email, password }) => {
 };
 
 const getGuest = async () => {
-    const response = await fetch('/api/users/guest', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-    });
+    const response = await fetch('/api/users/guest');
     return await response.json();
 };
 
 const getMe = async () => {
-    const response = await fetch('/api/users/me', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json', credentials: 'include' }
-    });
+    const response = await fetch('/api/users/me');
     return await response.json();
 };
 
 const logoutUser = async () => {
     const response = await fetch('/api/users/logout', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', credentials: 'include' }
+        headers: { 'Content-Type': 'application/json' }
     });
     return await response.json();
 };
