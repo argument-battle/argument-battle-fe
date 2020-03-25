@@ -1,13 +1,14 @@
 import React, { useEffect, useContext } from 'react';
 import { LayoutDataContext } from '../../layout';
-import { Typography, Container } from '@material-ui/core';
+import { Container } from '@material-ui/core';
+import { Battle } from './components/Battle';
 
-const BattlePage = () => {
+const BattlePage = ({ match }) => {
     const { initializeLayout } = useContext(LayoutDataContext);
     useEffect(() => initializeLayout(), []);
     return (
-        <Container component="main">
-            <Typography>BattlePage</Typography>
+        <Container component="main" disableGutters={true} maxWidth={false}>
+            <Battle id={match.params.battleId} />
         </Container>
     );
 };

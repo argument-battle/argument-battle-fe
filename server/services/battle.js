@@ -1,4 +1,4 @@
-const { Battle } = require('../models/battle');
+const Battle = require('../models/battle');
 
 async function create(req, res) {
     const { title } = req.body;
@@ -13,4 +13,19 @@ async function create(req, res) {
     }
 }
 
-module.exports = { create };
+async function getById(req, res) {
+    const { id } = req.params;
+    const userSelectQuery = 'username avatarUrl _id';
+    try {
+        const battle = await Battle.findById(id).populate([
+            { path: 'attacker', select: userSelectQuery },
+            { path: 'defender', select: userSelectQuery }
+        ]);
+
+        res.status(200).send({ battle });
+    } catch (error) {
+        res.status(500).send({ error });
+    }
+}
+
+module.exports = { create, getById };

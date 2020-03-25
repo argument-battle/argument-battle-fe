@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Input, SubmitInput } from '../../../shared/components/Inputs';
 import { Form } from '../../../shared/components/Form';
-import { postBattle } from '../../../services/postBattle';
+import { postBattle } from '../../../services/Battle';
+import { PAGE_PATHS } from '../../../Router';
 
 import useForm from '../../../shared/hooks/useForm';
 import validationSchema from '../validationSchema';
 
-const CreateBattleForm = () => {
+const CreateBattleForm = ({ routerHistory }) => {
     const [inputs, { setValue, validateInput, validateInputs, getValues }] = useForm(
         { title: '' },
         validationSchema
@@ -23,8 +24,10 @@ const CreateBattleForm = () => {
 
         setIsSubmitting(true);
         const values = getValues();
-        await postBattle(values);
+        const { battle } = await postBattle(values);
         setIsSubmitting(false);
+
+        routerHistory.push(`${PAGE_PATHS.BATTLE}/${battle._id}`);
     };
 
     const { title } = inputs;
