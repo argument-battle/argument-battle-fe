@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Box } from '@material-ui/core';
 import { getBattle } from '../../../services/Battle';
 import { NotFound } from '../../../shared/components/NotFound';
 import { BattleHeader } from './BattleHeader';
 import { Spinner } from '../../../shared/components/Spinner';
+import { MessageInput } from './MessageInput';
 import { UserContext } from '../../../providers/user';
 
 const USER_TYPES = {
@@ -55,10 +57,15 @@ function Battle({ id }) {
         return <Spinner />;
     }
 
+    const userType = getUserType();
+    const isSpectator = userType === USER_TYPES.SPECTATOR;
+
     return battle._id ? (
-        <>
-            <BattleHeader battle={battle} userType={getUserType()} bgcolor={getBackgroundColor()} />
-        </>
+        <Box display="flex" flexDirection="column" height="100%" bgcolor={getBackgroundColor()}>
+            <BattleHeader battle={battle} userType={userType} />
+            <Box height="100%" />
+            {!isSpectator && <MessageInput battleId={battle._id} />}
+        </Box>
     ) : (
         <NotFound />
     );

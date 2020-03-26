@@ -3,12 +3,11 @@ import { Box } from '@material-ui/core';
 import { UserInfo } from './UserInfo';
 import { BattleInfo } from './BattleInfo';
 
-function BattleHeader({ battle, userType, bgcolor }) {
+function BattleHeader({ battle, userType }) {
     const { title, defender, attacker } = battle;
 
     return (
         <Box
-            bgcolor={bgcolor}
             border={2}
             padding="20px"
             display="flex"
