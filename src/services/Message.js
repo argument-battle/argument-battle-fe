@@ -7,4 +7,9 @@ const postMessage = async ({ content, battle }) => {
     return await response.json();
 };
 
-export { postMessage };
+const getMessages = async ({ battle }) => {
+    const response = await fetch(`/api/messages?battle=${battle}`);
+    return await response.json();
+};
+
+export { postMessage, getMessages };
