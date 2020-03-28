@@ -1,34 +1,23 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
-import { USER_TYPES } from './Battle';
+import { USER_TYPES } from '../constants';
 
-const PHRASES = {
-    ATTACKER: 'Prove them wrong',
-    DEFENDER: 'Defend your statement',
-    SPECTATOR: 'Cast your judgement'
+const phrasesUserTypeMap = {
+    [USER_TYPES.ATTACKER]: 'Prove them wrong',
+    [USER_TYPES.DEFENDER]: 'Defend your statement',
+    [USER_TYPES.SPECTATOR]: 'Cast your judgement'
 };
 
-function BattleInfo({ title, userType }) {
-    let text;
-
-    switch (userType) {
-        case USER_TYPES.SPECTATOR:
-            text = PHRASES.SPECTATOR;
-            break;
-        case USER_TYPES.ATTACKER:
-            text = PHRASES.ATTACKER;
-            break;
-        case USER_TYPES.DEFENDER:
-            text = PHRASES.DEFENDER;
-            break;
-    }
-
+function BattleInfo({ title, userType, battleStatus }) {
+    const isInLobby = battleStatus === 'lobby';
     return (
         <Box textAlign="center">
             <Typography variant="h3">
                 <Box fontWeight="bold">{title} </Box>
             </Typography>
-            <Typography variant="h5">{text}</Typography>
+            <Typography variant="h5">
+                {isInLobby ? 'Waiting for opponent...' : phrasesUserTypeMap[userType]}
+            </Typography>
         </Box>
     );
 }

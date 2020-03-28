@@ -7,13 +7,8 @@ import { Spinner } from '../../../shared/components/Spinner';
 import { MessageInput } from './MessageInput';
 import { MessageList } from './MessageList';
 import { UserContext } from '../../../providers/user';
+import { USER_TYPES } from '../constants';
 import socket from '../../../shared/socket';
-
-const USER_TYPES = {
-    DEFENDER: 'defender',
-    ATTACKER: 'attacker',
-    SPECTATOR: 'spectator'
-};
 
 const BCOLORS = {
     RED: '#F2DEDE',
@@ -79,9 +74,9 @@ function Battle({ id }) {
         <Box display="flex" flexDirection="column" height="100%" bgcolor={getBackgroundColor()}>
             <BattleHeader battle={battle} userType={userType} />
             <MessageList battle={battle} userType={userType} />
-            {!isSpectator && <MessageInput battleId={battle._id} />}
+            {!isSpectator && <MessageInput battleId={battle._id} battleStatus={battle?.status} />}
         </Box>
     );
 }
 
-export { Battle, USER_TYPES };
+export { Battle };
