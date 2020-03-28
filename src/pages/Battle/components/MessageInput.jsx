@@ -3,7 +3,9 @@ import { TextField, Box } from '@material-ui/core';
 import { postMessage } from '../../../services/Message';
 import socket from '../../..//shared/socket';
 
-function MessageInput({ battleId }) {
+function MessageInput({ battleId, battleStatus }) {
+    const isInLobby = battleStatus === 'lobby';
+
     const [content, setContent] = useState('');
     const [isSending, setIsSending] = useState(false);
 
@@ -31,7 +33,8 @@ function MessageInput({ battleId }) {
                 onKeyDown={onKeyDown}
                 onChange={e => setContent(e.target.value)}
                 value={content}
-                disabled={isSending}
+                disabled={isSending || isInLobby}
+                placeholder={isInLobby && 'Waiting for opponent...'}
             />
         </Box>
     );

@@ -3,13 +3,8 @@ import { Box } from '@material-ui/core';
 import { Message } from './Message';
 import { getMessages } from '../../../services/Message';
 import { Spinner } from '../../../shared/components/Spinner';
-import { USER_TYPES } from './Battle';
+import { USER_TYPES, DIRECTION } from '../constants';
 import socket from '../../../shared/socket';
-
-const MESSAGE_POSITIONS = {
-    LEFT: 'left',
-    RIGHT: 'right'
-};
 
 function MessageList({ battle, userType }) {
     const [messages, setMessages] = useState(null);
@@ -53,9 +48,9 @@ function MessageList({ battle, userType }) {
         const isDefenderMessage = user === battle.defender._id;
 
         if ((isAttackerView && !isDefenderMessage) || (!isAttackerView && isDefenderMessage)) {
-            return MESSAGE_POSITIONS.LEFT;
+            return DIRECTION.LEFT;
         } else {
-            return MESSAGE_POSITIONS.RIGHT;
+            return DIRECTION.RIGHT;
         }
     }
 
@@ -82,4 +77,4 @@ function MessageList({ battle, userType }) {
     );
 }
 
-export { MessageList, MESSAGE_POSITIONS };
+export { MessageList };
