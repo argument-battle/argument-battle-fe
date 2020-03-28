@@ -7,8 +7,8 @@ import { Spinner } from '../../../shared/components/Spinner';
 import { MessageInput } from './MessageInput';
 import { MessageList } from './MessageList';
 import { UserContext } from '../../../providers/user';
-import { USER_TYPES } from '../constants';
 import socket from '../../../shared/socket';
+import { USER_TYPES } from '../../../shared/constants';
 
 const BCOLORS = {
     RED: '#F2DEDE',

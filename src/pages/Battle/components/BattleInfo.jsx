@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
-import { USER_TYPES } from '../constants';
+import { USER_TYPES } from '../../../shared/constants';
 
 const phrasesUserTypeMap = {
     [USER_TYPES.ATTACKER]: 'Prove them wrong',

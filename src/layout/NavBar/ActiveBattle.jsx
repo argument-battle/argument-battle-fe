@@ -4,7 +4,7 @@ import { SpeakerNotes, Visibility } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { PAGE_PATHS } from '../../Router';
 import useStyles from './styles/ActiveBattle';
-import { USER_TYPES } from '../../pages/Battle/constants';
+import { USER_TYPES } from '../../shared/constants';
 
 const ActiveBattle = ({ battle }) => {
     const classes = useStyles();

@@ -2,7 +2,8 @@ import React from 'react';
 import { Box } from '@material-ui/core';
 import { UserInfo } from './UserInfo';
 import { BattleInfo } from './BattleInfo';
-import { USER_TYPES, DIRECTION } from '../constants';
+import { DIRECTION } from '../constants';
+import { USER_TYPES } from '../../../shared/constants';
 
 function BattleHeader({ battle, userType }) {
     const { title, defender, attacker, status } = battle;

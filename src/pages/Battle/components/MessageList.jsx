@@ -3,7 +3,8 @@ import { Box } from '@material-ui/core';
 import { Message } from './Message';
 import { getMessages } from '../../../services/Message';
 import { Spinner } from '../../../shared/components/Spinner';
-import { USER_TYPES, DIRECTION } from '../constants';
+import { DIRECTION } from '../constants';
+import { USER_TYPES } from '../../../shared/constants';
 import socket from '../../../shared/socket';
 
 function MessageList({ battle, userType }) {
