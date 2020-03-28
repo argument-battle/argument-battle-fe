@@ -5,7 +5,9 @@ import { NotFound } from '../../../shared/components/NotFound';
 import { BattleHeader } from './BattleHeader';
 import { Spinner } from '../../../shared/components/Spinner';
 import { MessageInput } from './MessageInput';
+import { MessageList } from './MessageList';
 import { UserContext } from '../../../providers/user';
+import socket from '../../../shared/socket';
 
 const USER_TYPES = {
     DEFENDER: 'defender',
@@ -24,7 +26,18 @@ function Battle({ id }) {
 
     useEffect(() => {
         _getBattle();
+        joinBattle();
+
+        return leaveBattle;
     }, []);
+
+    function joinBattle() {
+        socket.emit('join battle', id);
+    }
+
+    function leaveBattle() {
+        socket.emit('leave battle', id);
+    }
 
     async function _getBattle() {
         const { battle } = await getBattle({ id });
@@ -63,7 +76,7 @@ function Battle({ id }) {
     return battle._id ? (
         <Box display="flex" flexDirection="column" height="100%" bgcolor={getBackgroundColor()}>
             <BattleHeader battle={battle} userType={userType} />
-            <Box height="100%" />
+            <MessageList battle={battle} userType={userType} />
             {!isSpectator && <MessageInput battleId={battle._id} />}
         </Box>
     ) : (

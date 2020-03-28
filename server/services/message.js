@@ -15,4 +15,16 @@ async function create(req, res) {
     }
 }
 
-module.exports = { create };
+async function getByBattle(req, res) {
+    const { battle } = req.query;
+
+    try {
+        const messages = await Message.find({ battle }).sort('createdAt');
+
+        res.status(200).send({ messages });
+    } catch (error) {
+        res.status(500).send({ error });
+    }
+}
+
+module.exports = { create, getByBattle };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Box } from '@material-ui/core';
 import { postMessage } from '../../../services/Message';
+import socket from '../../..//shared/socket';
 
 function MessageInput({ battleId }) {
     const [content, setContent] = useState('');
@@ -9,8 +10,9 @@ function MessageInput({ battleId }) {
     async function onSubmit() {
         if (content) {
             setIsSending(true);
-            await postMessage({ content, battle: battleId });
+            const { message: msg } = await postMessage({ content, battle: battleId });
             setIsSending(false);
+            socket.emit('send message', { battleId, msg });
             setContent('');
         }
     }
