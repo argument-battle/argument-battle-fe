@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Box } from '@material-ui/core';
 import { getBattle } from '../../../services/Battle';
-import { NotFound } from '../../../shared/components/NotFound';
+import NotFound from '../../../shared/components/NotFound';
 import { BattleHeader } from './BattleHeader';
 import { Spinner } from '../../../shared/components/Spinner';
 import { MessageInput } from './MessageInput';
@@ -28,7 +28,7 @@ function Battle({ id }) {
 
     async function _getBattle() {
         const { battle } = await getBattle({ id });
-        setBattle(battle);
+        setBattle(battle || {});
     }
 
     function getUserType() {
@@ -55,19 +55,19 @@ function Battle({ id }) {
 
     if (!battle) {
         return <Spinner />;
+    } else if (!battle._id) {
+        return <NotFound />;
     }
 
     const userType = getUserType();
     const isSpectator = userType === USER_TYPES.SPECTATOR;
 
-    return battle._id ? (
+    return (
         <Box display="flex" flexDirection="column" height="100%" bgcolor={getBackgroundColor()}>
             <BattleHeader battle={battle} userType={userType} />
             <Box height="100%" />
             {!isSpectator && <MessageInput battleId={battle._id} />}
         </Box>
-    ) : (
-        <NotFound />
     );
 }
 
