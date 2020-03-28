@@ -14,7 +14,7 @@ const UserProfile = () => {
         <Card>
             <CardHeader
                 avatar={
-                    <Box width="150px" height="150px" flexShrink={1}>
+                    <Box width="150px" height="150px">
                         <Avatar {...{ username, avatarUrl }} />
                     </Box>
                 }
