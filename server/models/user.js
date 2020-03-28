@@ -16,10 +16,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    battles: {
-        type: ObjectId,
-        ref: 'Battle'
-    },
+    battles: [
+        {
+            type: ObjectId,
+            ref: 'Battle'
+        }
+    ],
     avatarUrl: {
         type: String,
         required: true

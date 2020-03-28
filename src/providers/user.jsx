@@ -31,7 +31,7 @@ function UserProvider({ children }) {
         await logout();
         setUser(await getUser());
     }
-2
+
     async function loginUser(username, password) {
         const response = await login(username, password);
         if (!response.error) {

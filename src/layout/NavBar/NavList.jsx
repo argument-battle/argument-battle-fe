@@ -6,18 +6,14 @@ import { PAGE_PATHS } from '../../Router';
 import { ActiveBattles } from './ActiveBattles';
 import { UserContext } from '../../providers/user';
 
-const mockedBattles = [
-    { id: 1, isSpectating: true },
-    { id: 2, isSpectating: false }
-];
-
 const NavList = () => {
     const { user } = useContext(UserContext);
     return (
         <List>
             {!user.isGuest && (
                 <>
-                    <ActiveBattles battles={mockedBattles} /> <Divider />
+                    <ActiveBattles />
+                    <Divider />
                 </>
             )}
             <ListItem button key="Search rooms" component={Link} to={PAGE_PATHS.SEARCH}>

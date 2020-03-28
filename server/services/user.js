@@ -8,8 +8,27 @@ async function getAll(req, res) {
     res.status(200).send({ users });
 }
 
-function getMe(req, res) {
-    res.status(200).send({ user: res.locals.user });
+async function getMe(req, res) {
+    const userId = res.locals.user._id.toString();
+    const user = await User.findById(userId)
+        .lean()
+        .populate({
+            path: 'battles'
+        });
+    const newBattles = user.battles.map(({ _id, title, attacker, defender }) => {
+        const isDefender = userId === defender.toString();
+        const isAtacker = attacker && userId === attacker.toString();
+
+        let userType = 'spectator';
+        if (isDefender) {
+            userType = 'defender';
+        } else if (isAtacker) {
+            userType = 'attacker';
+        }
+
+        return { _id, title, userType };
+    });
+    res.status(200).send({ user: { ...user, battles: newBattles } });
 }
 
 async function getGuest(req, res) {

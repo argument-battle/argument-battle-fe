@@ -9,7 +9,6 @@ function BattleHeader({ battle, userType }) {
 
     return (
         <Box
-            border={2}
             padding="20px"
             display="flex"
             justifyContent="space-between"

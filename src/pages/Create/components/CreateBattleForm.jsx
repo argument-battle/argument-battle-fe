@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Input, SubmitInput } from '../../../shared/components/Inputs';
 import { Form } from '../../../shared/components/Form';
 import { postBattle } from '../../../services/Battle';
@@ -6,8 +6,10 @@ import { PAGE_PATHS } from '../../../Router';
 
 import useForm from '../../../shared/hooks/useForm';
 import validationSchema from '../validationSchema';
+import { UserContext } from '../../../providers/user';
 
 const CreateBattleForm = ({ routerHistory }) => {
+    const { getUser } = useContext(UserContext);
     const [inputs, { setValue, validateInput, validateInputs, getValues }] = useForm(
         { title: '' },
         validationSchema
@@ -27,6 +29,7 @@ const CreateBattleForm = ({ routerHistory }) => {
         const { battle } = await postBattle(values);
         setIsSubmitting(false);
 
+        getUser();
         routerHistory.push(`${PAGE_PATHS.BATTLE}/${battle._id}`);
     };
 
