@@ -34,6 +34,7 @@ async function getAll(req, res) {
     const pageNum = Number(page) - 1;
     try {
         const findBy = { topic: { $regex: topic || '', $options: 'i' } };
+        const totalCount = await Battle.countDocuments(findBy);
 
         if (!page) {
             const battles = await Battle.find(findBy)
@@ -41,8 +42,6 @@ async function getAll(req, res) {
                 .sort({ createdAt: 'desc' });
             return res.status(200).send({ totalCount: battles.length, battles });
         }
-
-        let totalCount = (await Battle.find(findBy)).length;
 
         const battles = await Battle.find(findBy)
             .select('-messages')
