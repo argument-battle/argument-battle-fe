@@ -28,4 +28,35 @@ async function getById(req, res) {
     }
 }
 
-module.exports = { create, getById };
+async function getAll(req, res) {
+    const { pageSize = 10, page, topic } = req.query;
+    const pageSizeNum = Number(pageSize);
+    const pageNum = Number(page) - 1;
+    try {
+        const findBy = { topic: { $regex: topic || '', $options: 'i' } };
+
+        if (!page) {
+            const battles = await Battle.find(findBy)
+                .select('-messages')
+                .sort({ createdAt: 'desc' });
+            return res.status(200).send({ totalCount: battles.length, battles });
+        }
+
+        let totalCount = (await Battle.find(findBy)).length;
+
+        const battles = await Battle.find(findBy)
+            .select('-messages')
+            .sort({ createdAt: 'desc' })
+            .limit(pageSizeNum)
+            .skip(pageSizeNum * pageNum);
+
+        let totalPages = Math.round(totalCount / pageSizeNum);
+        totalPages = totalPages === 0 ? 1 : totalPages;
+        res.status(200).send({ totalCount, totalPages, battles });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error });
+    }
+}
+
+module.exports = { create, getById, getAll };
