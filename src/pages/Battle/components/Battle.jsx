@@ -24,7 +24,7 @@ function Battle({ id }) {
         joinBattle();
 
         return leaveBattle;
-    }, []);
+    }, [id]);
 
     function joinBattle() {
         socket.emit('join battle', id);

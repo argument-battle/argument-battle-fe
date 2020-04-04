@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const gravatar = require('gravatar');
+const generateToken = require('../helpers/generateToken');
 
 async function getAll(req, res) {
     const users = await User.find({});
@@ -15,7 +15,7 @@ async function getMe(req, res) {
         .populate({
             path: 'battles'
         });
-    const newBattles = user.battles.map(({ _id, title, attacker, defender }) => {
+    const newBattles = user.battles.map(({ _id, topic, attacker, defender }) => {
         const isDefender = userId === defender.toString();
         const isAtacker = attacker && userId === attacker.toString();
 
@@ -26,7 +26,7 @@ async function getMe(req, res) {
             userType = 'attacker';
         }
 
-        return { _id, title, userType };
+        return { _id, topic, userType };
     });
     res.status(200).send({ user: { ...user, battles: newBattles } });
 }
@@ -52,17 +52,18 @@ async function get(req, res) {
 async function create(req, res) {
     try {
         const salt = 10;
-        const hash = await bcrypt.hash(req.body.password, salt);
+        const { password, email } = req.body;
+        const hash = await bcrypt.hash(password, salt);
         const avatarUrl = gravatar.url(
-            req.body.email,
+            email,
             { size: '200', rating: 'x', default: 'robohash' },
             false
         );
 
         const user = new User({ ...req.body, password: hash, avatarUrl });
-
         await user.save();
-        res.status(201).send({ message: 'Success' });
+
+        res.status(201).send({ user });
     } catch (error) {
         res.status(400).send({ error });
     }
@@ -84,12 +85,9 @@ async function login(req, res) {
             return;
         }
 
-        const expiresIn = '10h';
-        const token = jwt.sign({ username, password }, process.env.JWT_KEY, {
-            expiresIn
-        });
-
+        const token = generateToken({ username, password });
         res.cookie('user_token', token);
+
         res.status(200).send({ message: 'Success' });
     } catch (error) {
         res.status(500).send({ error });

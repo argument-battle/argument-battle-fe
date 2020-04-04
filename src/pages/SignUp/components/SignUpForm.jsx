@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { Input, PasswordInput, SubmitInput } from '../../../shared/components/Inputs';
 import { Form } from '../../../shared/components/Form';
 import { FormFooter } from './FormFooter';
-import { postUser } from '../../../services/User';
 
 import useForm from '../../../shared/hooks/useForm';
 import validationSchema from '../validationSchema';
+import { UserContext } from '../../../providers/user';
 
 const SignUpForm = ({ routerHistory }) => {
     const [inputs, { setValue, validateInput, validateInputs, getValues, setError }] = useForm(
@@ -14,6 +14,7 @@ const SignUpForm = ({ routerHistory }) => {
         validationSchema
     );
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const { postUser } = useContext(UserContext);
 
     const handleSubmit = async event => {
         event.preventDefault();
@@ -26,9 +27,10 @@ const SignUpForm = ({ routerHistory }) => {
         setIsSubmitting(true);
         const values = getValues();
         const response = await postUser(values);
-        setIsSubmitting(false);
 
         if (response.error) {
+            setIsSubmitting(false);
+            
             const error = response.error.errmsg || '';
             const isUsernameDuplicate = ['username', 'duplicate'].every(el => error.includes(el));
             if (isUsernameDuplicate) {
