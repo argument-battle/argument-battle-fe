@@ -6,9 +6,11 @@ import { BattlePage } from './pages/Battle';
 import { SignUpPage } from './pages/SignUp';
 import { NotFoundPage } from './pages/NotFound';
 import { LoginPage } from './pages/Login';
+import { HomePage } from './pages/Home';
 import { PrivateRoute, GuestOnlyRoute } from './shared/components/Routes';
 
 const PAGE_PATHS = {
+    HOME: '/',
     SEARCH: '/search',
     BATTLE: '/battle',
     CREATE: '/create',
@@ -19,6 +21,7 @@ const PAGE_PATHS = {
 const Router = () => {
     return (
         <Switch>
+            <Route exact path={PAGE_PATHS.HOME} component={HomePage} />
             <GuestOnlyRoute exact path={PAGE_PATHS.SIGN_UP} component={SignUpPage} />
             <GuestOnlyRoute exact path={PAGE_PATHS.LOG_IN} component={LoginPage} />
             <PrivateRoute exact path={PAGE_PATHS.CREATE} component={CreatePage} />

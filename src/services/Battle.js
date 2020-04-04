@@ -12,4 +12,12 @@ const getBattle = async ({ id }) => {
     return await response.json();
 };
 
-export { postBattle, getBattle };
+const getAllBattles = async (params = {}) => {
+    var query = Object.keys(params)
+        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+        .join('&');
+    const response = await fetch(`/api/battles${query ? `?${query}` : ''}`);
+    return await response.json();
+};
+
+export { postBattle, getBattle, getAllBattles };
