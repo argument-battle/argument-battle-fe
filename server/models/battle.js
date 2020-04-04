@@ -3,7 +3,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const battleSchema = new mongoose.Schema(
     {
-        title: {
+        topic: {
             type: String,
             required: true
         },

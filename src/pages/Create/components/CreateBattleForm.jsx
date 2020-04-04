@@ -11,7 +11,7 @@ import { UserContext } from '../../../providers/user';
 const CreateBattleForm = ({ routerHistory }) => {
     const { getUser } = useContext(UserContext);
     const [inputs, { setValue, validateInput, validateInputs, getValues }] = useForm(
-        { title: '' },
+        { topic: '' },
         validationSchema
     );
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,15 +33,15 @@ const CreateBattleForm = ({ routerHistory }) => {
         routerHistory.push(`${PAGE_PATHS.BATTLE}/${battle._id}`);
     };
 
-    const { title } = inputs;
+    const { topic } = inputs;
 
     return (
         <Form onSubmit={handleSubmit} header="CREATE BATTLE">
             <Input
-                label={'title'}
-                value={title.value}
+                label={'topic'}
+                value={topic.value}
                 onChange={setValue}
-                error={title.error}
+                error={topic.error}
                 onBlur={validateInput}
             />
             <SubmitInput disabled={isSubmitting} value="Create battle" />

@@ -1,7 +1,7 @@
-const postBattle = async ({ title }) => {
+const postBattle = async ({ topic }) => {
     const response = await fetch('/api/battles', {
         method: 'POST',
-        body: JSON.stringify({ title }),
+        body: JSON.stringify({ topic }),
         headers: { 'Content-Type': 'application/json' }
     });
     return await response.json();

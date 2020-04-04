@@ -1,5 +1,11 @@
 import React, { createContext, useState } from 'react';
-import { getMe, getGuest, logoutUser as logout, loginUser as login } from '../services/User';
+import {
+    getMe,
+    getGuest,
+    logoutUser as logout,
+    loginUser as login,
+    postUser as create
+} from '../services/User';
 
 const UserContext = createContext(null);
 
@@ -32,16 +38,24 @@ function UserProvider({ children }) {
         setUser(await getUser());
     }
 
-    async function loginUser(username, password) {
-        const response = await login(username, password);
+    async function loginUser({ username, password }) {
+        const response = await login({ username, password });
         if (!response.error) {
             setUser(await getUser());
         }
         return response;
     }
 
+    async function postUser({ username, password, email }) {
+        const response = await create({ username, password, email });
+        if (response.user) {
+            await loginUser({ username, password });
+        }
+        return response;
+    }
+
     return (
-        <UserContext.Provider value={{ user, getUser, logoutUser, loginUser }}>
+        <UserContext.Provider value={{ user, getUser, logoutUser, loginUser, postUser }}>
             {children}
         </UserContext.Provider>
     );

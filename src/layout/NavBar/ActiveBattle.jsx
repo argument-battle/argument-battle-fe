@@ -9,7 +9,7 @@ import { USER_TYPES } from '../../shared/constants';
 const ActiveBattle = ({ battle }) => {
     const classes = useStyles();
 
-    const { _id, userType, title } = battle;
+    const { _id, userType, topic } = battle;
     const isSpectating = userType === USER_TYPES.SPECTATOR;
 
     return (
@@ -20,7 +20,7 @@ const ActiveBattle = ({ battle }) => {
             to={PAGE_PATHS.BATTLE + '/' + _id}
         >
             <ListItemIcon>{isSpectating ? <Visibility /> : <SpeakerNotes />}</ListItemIcon>
-            <ListItemText primary={title} />
+            <ListItemText primary={topic} />
         </ListItem>
     );
 };

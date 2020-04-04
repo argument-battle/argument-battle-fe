@@ -6,7 +6,7 @@ import { DIRECTION } from '../constants';
 import { USER_TYPES } from '../../../shared/constants';
 
 function BattleHeader({ battle, userType }) {
-    const { title, defender, attacker, status } = battle;
+    const { topic, defender, attacker, status } = battle;
 
     return (
         <Box
@@ -22,7 +22,7 @@ function BattleHeader({ battle, userType }) {
                 userType={USER_TYPES.DEFENDER}
                 textPosition={DIRECTION.RIGHT}
             />
-            <BattleInfo title={title} userType={userType} battleStatus={status} />
+            <BattleInfo topic={topic} userType={userType} battleStatus={status} />
 
             <UserInfo
                 username={attacker?.username}
