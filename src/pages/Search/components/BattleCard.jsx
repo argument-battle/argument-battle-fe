@@ -9,9 +9,10 @@ const BattleCard = ({ battle, routerHistory }) => {
     const classes = useStyles();
 
     const { user } = useContext(UserContext);
-    const { isGuest } = user;
+    const { isGuest, _id: userId } = user;
 
-    const { topic, status, _id } = battle;
+    const { topic, status, _id, defender } = battle;
+    const isDefender = userId === defender;
     const capitalizedTopic = topic.charAt(0).toUpperCase() + topic.slice(1);
 
     const attack = () => {
@@ -35,7 +36,7 @@ const BattleCard = ({ battle, routerHistory }) => {
                         <Box marginX={1} flexGrow={1} width="100%">
                             <Typography>{capitalizedTopic}</Typography>
                         </Box>
-                        {status === 'lobby' && !isGuest && (
+                        {status === 'lobby' && !isGuest && !isDefender && (
                             <Button size="large" onClick={attack}>
                                 Attack
                             </Button>

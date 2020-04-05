@@ -9,7 +9,11 @@ const Search = ({ location, routerHistory, topic }) => {
     const handleSubmit = event => {
         event.preventDefault();
         const params = new URLSearchParams(location.search);
-        params.set('topic', event.target.topic.value);
+        if (event.target.topic.value) {
+            params.set('topic', event.target.topic.value);
+        } else {
+            params.delete('topic');
+        }
         const queryString = params.toString();
         routerHistory.push(`${PAGE_PATHS.SEARCH}${queryString ? `?${queryString}` : ''}`);
     };
