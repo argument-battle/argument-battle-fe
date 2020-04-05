@@ -6,12 +6,15 @@ import { LogOutButton } from './LogOutButton';
 import { GuestSubHeader } from './GuestSubHeader';
 import { UserContext } from '../../../providers/user';
 
+import useStyles from './styles/UserProfile';
+
 const UserProfile = () => {
+    const classes = useStyles();
     const { user } = useContext(UserContext);
     const { avatarUrl, username, isGuest } = user;
 
     return (
-        <Card>
+        <Card className={classes.card}>
             <CardHeader
                 avatar={
                     <Box width="150px" height="150px">
