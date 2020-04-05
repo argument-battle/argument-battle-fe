@@ -34,7 +34,7 @@ const Search = ({ location, routerHistory }) => {
     useEffect(() => {
         _getAllBattles();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, pageSize]);
+    }, [page, pageSize, topic]);
 
     return page > totalPages && totalPages !== 0 ? (
         <NotFoundPage />
