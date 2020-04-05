@@ -4,6 +4,8 @@ import { VisibilityTwoTone, SportsMmaTwoTone } from '@material-ui/icons';
 import useStyles from './styles/BattleCard';
 import { UserContext } from '../../../providers/user';
 import { PAGE_PATHS } from '../../../Router';
+import { joinBattle } from '../../../services/Battle';
+import socket from '../../../shared/socket';
 
 const BattleCard = ({ battle, routerHistory }) => {
     const classes = useStyles();
@@ -15,7 +17,9 @@ const BattleCard = ({ battle, routerHistory }) => {
     const isDefender = userId === defender;
     const capitalizedTopic = topic.charAt(0).toUpperCase() + topic.slice(1);
 
-    const attack = () => {
+    const attack = async () => {
+        await joinBattle(_id);
+        socket.emit('join as attacker', _id);
         routerHistory.push(`${PAGE_PATHS.BATTLE}/${_id}`);
     };
 

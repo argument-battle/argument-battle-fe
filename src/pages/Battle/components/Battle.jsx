@@ -21,17 +21,21 @@ function Battle({ id }) {
 
     useEffect(() => {
         _getBattle();
-        joinBattle();
+        addSockets();
 
-        return leaveBattle;
+        return removeSockets;
     }, [id]);
 
-    function joinBattle() {
+    function addSockets() {
         socket.emit('join battle', id);
+        socket.on('battle update', () => {
+            _getBattle();
+        });
     }
 
-    function leaveBattle() {
+    function removeSockets() {
         socket.emit('leave battle', id);
+        socket.off('battle update');
     }
 
     async function _getBattle() {

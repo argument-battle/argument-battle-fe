@@ -12,9 +12,9 @@ function MessageInput({ battleId, battleStatus }) {
     async function onSubmit() {
         if (content) {
             setIsSending(true);
-            const { message: msg } = await postMessage({ content, battle: battleId });
+            await postMessage({ content, battle: battleId });
             setIsSending(false);
-            socket.emit('send message', { battleId, msg });
+            socket.emit('send message', battleId);
             setContent('');
         }
     }
@@ -34,7 +34,7 @@ function MessageInput({ battleId, battleStatus }) {
                 onChange={e => setContent(e.target.value)}
                 value={content}
                 disabled={isSending || isInLobby}
-                placeholder={isInLobby && 'Waiting for opponent...'}
+                placeholder={isInLobby ? 'Waiting for opponent...' : ''}
             />
         </Box>
     );

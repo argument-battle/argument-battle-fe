@@ -20,4 +20,9 @@ const getAllBattles = async (params = {}) => {
     return await response.json();
 };
 
-export { postBattle, getBattle, getAllBattles };
+const joinBattle = async id => {
+    const response = await fetch(`/api/battles/${id}/join`, { method: 'PATCH' });
+    return await response.json();
+};
+
+export { postBattle, getBattle, getAllBattles, joinBattle };
