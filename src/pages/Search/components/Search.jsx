@@ -22,7 +22,7 @@ const Search = ({ location, routerHistory }) => {
             queryParams.topic = topic;
         }
         const { battles = [], totalPages = 10 } = await getAllBattles(queryParams);
-        if (isUnmounted) {
+        if (!isUnmounted) {
             setBattles(battles);
             setTotalPages(totalPages);
         }
