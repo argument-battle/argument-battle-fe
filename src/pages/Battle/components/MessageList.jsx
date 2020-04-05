@@ -15,7 +15,7 @@ function MessageList({ battle, userType }) {
         _getMessages();
         newMessageListener();
         return clearListeners;
-    }, []);
+    }, [battle]);
 
     function newMessageListener() {
         socket.on('new message', () => {

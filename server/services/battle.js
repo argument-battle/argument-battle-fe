@@ -54,8 +54,30 @@ async function getAll(req, res) {
         res.status(200).send({ totalCount, totalPages, battles });
     } catch (error) {
         console.error(error);
+    }
+}
+
+async function join(req, res) {
+    const { id } = req.params;
+    const { user } = res.locals;
+
+    try {
+        const battle = await Battle.findById(id);
+
+        const isDefender = battle.defender.toString() === user._id.toString();
+        if (isDefender) {
+            return res.status(400).send({ error: 'You cant join your own battle' });
+        } else if (battle.attacker) {
+            return res.status(400).send({ error: 'Attacker already exists' });
+        }
+
+        await battle.updateOne({ attacker: user._id, status: 'active' });
+        await user.updateOne({ $push: { battles: id } });
+
+        res.status(200).send({ message: 'Worked' });
+    } catch (error) {
         res.status(500).send({ error });
     }
 }
 
-module.exports = { create, getById, getAll };
+module.exports = { create, getById, getAll, join };

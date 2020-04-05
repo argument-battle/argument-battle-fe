@@ -8,8 +8,12 @@ function socketEvents(io) {
             socket.leave(battleId);
         });
 
-        socket.on('send message', ({ battleId }) => {
+        socket.on('send message', battleId => {
             io.in(battleId).emit('new message', null);
+        });
+
+        socket.on('join as attacker', battleId => {
+            io.to(battleId).emit('battle update', null);
         });
     });
 }
