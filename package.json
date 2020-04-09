@@ -5,7 +5,9 @@
     "main": "server/index.js",
     "scripts": {
         "start": "env NODE_ENV=production node server",
-        "dev": "env NODE_ENV=development nodemon server"
+        "dev": "env NODE_ENV=development nodemon server",
+        "test": "echo no test",
+        "lint": "eslint \"./src/**\" \"./server/**\""
     },
     "repository": {
         "type": "git",
