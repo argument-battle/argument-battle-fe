@@ -30,7 +30,7 @@ const SignUpForm = ({ routerHistory }) => {
 
         if (response.error) {
             setIsSubmitting(false);
-            
+
             const error = response.error.errmsg || '';
             const isUsernameDuplicate = ['username', 'duplicate'].every(el => error.includes(el));
             if (isUsernameDuplicate) {
