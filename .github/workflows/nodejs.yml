@@ -4,6 +4,9 @@
 name: Node.js CI
 
 on:
+  release:
+    # Only use the types keyword to narrow down the activity types that will trigger your workflow.
+    types: [published, created, edited]
   push:
     branches: [ master, develop ]
   pull_request:
