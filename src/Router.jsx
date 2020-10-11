@@ -11,11 +11,11 @@ import { PrivateRoute, GuestOnlyRoute } from './shared/components/Routes';
 
 const PAGE_PATHS = {
     HOME: '/',
-    SEARCH: '/search',
-    BATTLE: '/battle',
-    CREATE: '/create',
-    SIGN_UP: '/signup',
-    LOG_IN: '/login'
+    SEARCH: '/paieska',
+    BATTLE: '/debatai',
+    CREATE: '/sukurti',
+    SIGN_UP: '/registracija',
+    LOG_IN: '/prisijungimas'
 };
 
 const Router = () => {

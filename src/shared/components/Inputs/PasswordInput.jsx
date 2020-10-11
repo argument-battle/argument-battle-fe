@@ -9,9 +9,8 @@ import {
 } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import useStyles from './styles/Input';
-import startCase from 'lodash.startcase';
 
-const PasswordInput = ({ label, error, onChange, onBlur, value, required }) => {
+const PasswordInput = ({ label, name = label, error, onChange, onBlur, value, required }) => {
     const classes = useStyles();
 
     const [shouldShowPassword, setShouldShowPassword] = useState(false);
@@ -25,12 +24,12 @@ const PasswordInput = ({ label, error, onChange, onBlur, value, required }) => {
 
     return (
         <FormControl variant="outlined" fullWidth error={!!error} required={required}>
-            <InputLabel htmlFor={label}>{startCase(label)}</InputLabel>
+            <InputLabel htmlFor={name}>{label}</InputLabel>
             <OutlinedInput
-                id={label}
+                id={name}
                 className={classes.input}
                 type={shouldShowPassword ? 'text' : 'password'}
-                name={label}
+                name={name}
                 value={value}
                 endAdornment={
                     <InputAdornment position="end">
@@ -44,7 +43,7 @@ const PasswordInput = ({ label, error, onChange, onBlur, value, required }) => {
                         </IconButton>
                     </InputAdornment>
                 }
-                label={label}
+                label={name}
                 onChange={handleChange}
                 onBlur={e => onBlur(e.target.name)}
                 autoComplete="on"

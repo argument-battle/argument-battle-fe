@@ -36,15 +36,16 @@ const CreateBattleForm = ({ routerHistory }) => {
     const { topic } = inputs;
 
     return (
-        <Form onSubmit={handleSubmit} header="CREATE BATTLE">
+        <Form onSubmit={handleSubmit} header="SUKURTI DEBATUS">
             <Input
-                label={'topic'}
+                label="Tema"
+                name="topic"
                 value={topic.value}
                 onChange={setValue}
                 error={topic.error}
                 onBlur={validateInput}
             />
-            <SubmitInput disabled={isSubmitting} value="Create battle" />
+            <SubmitInput disabled={isSubmitting} value="Sukurti debatus" />
         </Form>
     );
 };

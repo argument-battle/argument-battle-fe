@@ -8,7 +8,7 @@ const CreatePage = ({ history }) => {
     const classes = useStyles();
 
     const { initializeLayout } = useContext(LayoutDataContext);
-    useEffect(() => initializeLayout(), []);
+    useEffect(() => initializeLayout(), [initializeLayout]);
     return (
         <Container component="main" maxWidth="sm" className={classes.container}>
             <CreateBattleForm routerHistory={history} />

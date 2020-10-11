@@ -4,7 +4,7 @@ import { Box, Typography } from '@material-ui/core';
 import startCase from 'lodash.startcase';
 import { oppositeDirectionMap, DIRECTION } from '../constants';
 
-function UserInfo({ username, avatarUrl, textPosition, userType }) {
+const UserInfo = ({ username, avatarUrl, textPosition, userType }) => {
     const _username = username || '????????';
     return (
         <Box
@@ -22,6 +22,6 @@ function UserInfo({ username, avatarUrl, textPosition, userType }) {
             </Box>
         </Box>
     );
-}
+};
 
 export { UserInfo };

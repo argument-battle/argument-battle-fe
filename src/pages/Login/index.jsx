@@ -8,7 +8,7 @@ const LoginPage = ({ history }) => {
     const classes = useStyles();
 
     const { initializeLayout } = useContext(LayoutDataContext);
-    useEffect(() => initializeLayout({ shouldHideNavBar: true }), []);
+    useEffect(() => initializeLayout({ shouldHideNavBar: true }), [initializeLayout]);
 
     return (
         <Container component="main" maxWidth="sm" className={classes.container}>

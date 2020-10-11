@@ -5,7 +5,7 @@ import { BattleInfo } from './BattleInfo';
 import { DIRECTION } from '../constants';
 import { USER_TYPES } from '../../../shared/constants';
 
-function BattleHeader({ battle, userType }) {
+const BattleHeader = ({ battle, userType }) => {
     const { topic, defender, attacker, status } = battle;
 
     return (
@@ -32,6 +32,6 @@ function BattleHeader({ battle, userType }) {
             />
         </Box>
     );
-}
+};
 
 export { BattleHeader };

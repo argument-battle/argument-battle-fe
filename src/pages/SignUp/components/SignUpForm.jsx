@@ -10,7 +10,7 @@ import { UserContext } from '../../../providers/user';
 
 const SignUpForm = ({ routerHistory }) => {
     const [inputs, { setValue, validateInput, validateInputs, getValues, setError }] = useForm(
-        { username: '', email: '', password: '', confirmPassword: '' },
+        { username: '', email: '', password: '', confirmPassword: '', secretCode: '' },
         validationSchema
     );
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,7 +30,7 @@ const SignUpForm = ({ routerHistory }) => {
 
         if (response.error) {
             setIsSubmitting(false);
-            
+
             const error = response.error.errmsg || '';
             const isUsernameDuplicate = ['username', 'duplicate'].every(el => error.includes(el));
             if (isUsernameDuplicate) {
@@ -47,12 +47,13 @@ const SignUpForm = ({ routerHistory }) => {
         routerHistory.push('/');
     };
 
-    const { username, email, password, confirmPassword } = inputs;
+    const { username, email, password, confirmPassword, secretCode } = inputs;
 
     return (
-        <Form onSubmit={handleSubmit} header="SIGN UP" footer={FormFooter}>
+        <Form onSubmit={handleSubmit} header="REGISTRUOTIS" footer={FormFooter}>
             <Input
-                label="username"
+                label="Slapyvardis"
+                name="username"
                 value={username.value}
                 onChange={setValue}
                 error={username.error}
@@ -60,7 +61,8 @@ const SignUpForm = ({ routerHistory }) => {
                 required
             />
             <Input
-                label="email"
+                label="El. paštas"
+                name="email"
                 value={email.value}
                 onChange={setValue}
                 error={email.error}
@@ -69,7 +71,8 @@ const SignUpForm = ({ routerHistory }) => {
                 required
             />
             <PasswordInput
-                label="password"
+                label="Slaptažodis"
+                name="password"
                 value={password.value}
                 onChange={setValue}
                 error={password.error}
@@ -79,15 +82,26 @@ const SignUpForm = ({ routerHistory }) => {
                 }}
                 required
             />
+
             <PasswordInput
-                label="confirmPassword"
+                label="Pakartoti slaptažodį"
+                name="confirmPassword"
                 value={confirmPassword.value}
                 onChange={setValue}
                 error={confirmPassword.error}
                 onBlur={validateInput}
                 required
             />
-            <SubmitInput disabled={isSubmitting} value="Submit" />
+            <Input
+                label="Slaptas debatų klubo kodas"
+                name="secretCode"
+                value={secretCode.value}
+                onChange={setValue}
+                error={secretCode.error}
+                onBlur={validateInput}
+                required
+            />
+            <SubmitInput disabled={isSubmitting} value="Registruotis" />
         </Form>
     );
 };

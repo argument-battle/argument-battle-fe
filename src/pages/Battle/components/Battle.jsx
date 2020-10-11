@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { Box } from '@material-ui/core';
-import { getBattle } from '../../../services/Battle';
+import { getBattle as getBattleService } from '../../../services/Battle';
 import NotFound from '../../../shared/components/NotFound';
 import { BattleHeader } from './BattleHeader';
 import { Spinner } from '../../../shared/components/Spinner';
@@ -15,35 +15,28 @@ const BCOLORS = {
     GREEN: '#E6EFEB'
 };
 
-function Battle({ id }) {
+const Battle = ({ id }) => {
     const [battle, setBattle] = useState(null);
     const { user } = useContext(UserContext);
 
-    useEffect(() => {
-        _getBattle();
-        addSockets();
-
-        return removeSockets;
+    const getBattle = useCallback(async () => {
+        const { battle } = await getBattleService({ id });
+        setBattle(battle || {});
     }, [id]);
 
-    function addSockets() {
+    useEffect(() => {
+        getBattle();
         socket.emit('join battle', id);
         socket.on('battle update', () => {
-            _getBattle();
+            getBattle();
         });
-    }
+        return () => {
+            socket.emit('leave battle', id);
+            socket.off('battle update');
+        };
+    }, [id, getBattle]);
 
-    function removeSockets() {
-        socket.emit('leave battle', id);
-        socket.off('battle update');
-    }
-
-    async function _getBattle() {
-        const { battle } = await getBattle({ id });
-        setBattle(battle || {});
-    }
-
-    function getUserType() {
+    const getUserType = useCallback(() => {
         const { attacker, defender } = battle;
 
         switch (user.username) {
@@ -53,9 +46,9 @@ function Battle({ id }) {
                 return USER_TYPES.ATTACKER;
         }
         return USER_TYPES.SPECTATOR;
-    }
+    }, [battle, user.username]);
 
-    function getBackgroundColor() {
+    const getBackgroundColor = useCallback(() => {
         const userType = getUserType();
 
         if (userType === USER_TYPES.ATTACKER) {
@@ -63,7 +56,7 @@ function Battle({ id }) {
         } else {
             return BCOLORS.GREEN;
         }
-    }
+    }, [getUserType]);
 
     if (!battle) {
         return <Spinner />;
@@ -81,6 +74,6 @@ function Battle({ id }) {
             {!isSpectator && <MessageInput battleId={battle._id} battleStatus={battle?.status} />}
         </Box>
     );
-}
+};
 
 export { Battle };

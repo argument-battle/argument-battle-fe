@@ -9,8 +9,8 @@ async function getUserMiddleware(req, res, next) {
             throw new Error();
         }
 
-        const { username } = jwt.verify(userToken, process.env.JWT_KEY);
-        const user = await User.findOne({ username });
+        const { email } = jwt.verify(userToken, process.env.JWT_KEY);
+        const user = await User.findOne({ email });
         if (user) {
             res.locals.user = user;
         } else {

@@ -1,10 +1,13 @@
 const User = require('../models/user');
+const DebateClub = require('../models/debateClub');
 const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
 const generateToken = require('../helpers/generateToken');
 
 async function getAll(req, res) {
-    const users = await User.find({});
+    const users = await User.find({}).populate({
+        path: 'debateclubs'
+    });
     res.status(200).send({ users });
 }
 
@@ -14,6 +17,9 @@ async function getMe(req, res) {
         .lean()
         .populate({
             path: 'battles'
+        })
+        .populate({
+            path: 'debateclubs'
         });
     const newBattles = user.battles.map(({ _id, topic, attacker, defender }) => {
         const isDefender = userId === defender.toString();
@@ -52,7 +58,11 @@ async function get(req, res) {
 async function create(req, res) {
     try {
         const salt = 10;
-        const { password, email } = req.body;
+        const { password, email, secretCode } = req.body;
+        const debateClub = await DebateClub.findOne({ secretCode });
+        if (!debateClub) {
+            throw new Error('Debate club does not exist');
+        }
         const hash = await bcrypt.hash(password, salt);
         const avatarUrl = gravatar.url(
             email,
@@ -60,7 +70,12 @@ async function create(req, res) {
             false
         );
 
-        const user = new User({ ...req.body, password: hash, avatarUrl });
+        const user = new User({
+            ...req.body,
+            password: hash,
+            avatarUrl,
+            debateClub: debateClub._id
+        });
         await user.save();
 
         res.status(201).send({ user });
@@ -71,21 +86,22 @@ async function create(req, res) {
 
 async function login(req, res) {
     try {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
 
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ email });
         if (!user) {
             res.status(401).send({ error: 'Unauthorized' });
             return;
         }
 
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
+        console.log('password compare', isPasswordCorrect);
         if (!isPasswordCorrect) {
             res.status(401).send({ error: 'Unauthorized' });
             return;
         }
 
-        const token = generateToken({ username, password });
+        const token = generateToken({ email, password });
         res.cookie('user_token', token);
 
         res.status(200).send({ message: 'Success' });

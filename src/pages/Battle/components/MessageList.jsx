@@ -1,50 +1,44 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Box } from '@material-ui/core';
 import { Message } from './Message';
-import { getMessages } from '../../../services/Message';
+import { getMessages as getMessagesService } from '../../../services/Message';
 import { Spinner } from '../../../shared/components/Spinner';
 import { DIRECTION } from '../constants';
 import { USER_TYPES } from '../../../shared/constants';
 import socket from '../../../shared/socket';
 
-function MessageList({ battle, userType }) {
+const MessageList = ({ battle, userType }) => {
     const [messages, setMessages] = useState(null);
-    const messageListEl = useRef(null);
+    const messageListElRef = useRef(null);
 
-    useEffect(() => {
-        _getMessages();
-        newMessageListener();
-        return clearListeners;
-    }, [battle]);
-
-    function newMessageListener() {
-        socket.on('new message', () => {
-            _getMessages();
-        });
-    }
-
-    function clearListeners() {
-        socket.off('new message');
-    }
-
-    async function _getMessages() {
-        const { messages } = await getMessages({ battle: battle._id });
-        await setMessages(messages);
-        scrollToEnd();
-    }
-
-    function scrollToEnd() {
-        const el = messageListEl.current;
+    const scrollToEnd = () => {
+        const el = messageListElRef.current;
         setTimeout(() => {
             el.scrollTop = el.scrollHeight;
         }, 1);
-    }
+    };
 
-    function getMessageColor(user) {
+    const getMessages = useCallback(async () => {
+        const { messages } = await getMessagesService({ battle: battle._id });
+        setMessages(messages);
+        scrollToEnd();
+    }, [battle]);
+
+    useEffect(() => {
+        getMessages();
+        socket.on('new message', () => {
+            getMessages();
+        });
+        return () => {
+            socket.off('new message');
+        };
+    }, [battle, getMessages]);
+
+    const getMessageColor = user => {
         return user === battle.defender._id ? '#83CDC0' : '#DFA5A5';
-    }
+    };
 
-    function getMessagePosition(user) {
+    const getMessagePosition = user => {
         const isAttackerView = userType === USER_TYPES.ATTACKER;
         const isDefenderMessage = user === battle.defender._id;
 
@@ -53,7 +47,7 @@ function MessageList({ battle, userType }) {
         } else {
             return DIRECTION.RIGHT;
         }
-    }
+    };
 
     if (!messages) {
         return (
@@ -64,7 +58,7 @@ function MessageList({ battle, userType }) {
     }
 
     return (
-        <Box flex={2} flexDirection="column" overflow="auto" marginX="40px" ref={messageListEl}>
+        <Box flex={2} flexDirection="column" overflow="auto" marginX="40px" ref={messageListElRef}>
             {messages.map(({ content, user }, index) => (
                 <Message
                     key={index}
@@ -76,6 +70,6 @@ function MessageList({ battle, userType }) {
             ))}
         </Box>
     );
-}
+};
 
 export { MessageList };

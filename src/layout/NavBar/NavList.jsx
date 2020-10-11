@@ -20,14 +20,14 @@ const NavList = () => {
                 <ListItemIcon>
                     <Search />
                 </ListItemIcon>
-                <ListItemText primary="Search rooms" />
+                <ListItemText primary="Ieškoti debatų" />
             </ListItem>
-            {!user.isGuest && (
+            {user.isModerator && (
                 <ListItem button key="Create a room" component={Link} to={PAGE_PATHS.CREATE}>
                     <ListItemIcon>
                         <Add />
                     </ListItemIcon>
-                    <ListItemText primary="Create a room" />
+                    <ListItemText primary="Sukurti debatų kambarį" />
                 </ListItem>
             )}
         </List>

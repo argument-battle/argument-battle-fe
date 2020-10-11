@@ -8,7 +8,7 @@ const phrasesUserTypeMap = {
     [USER_TYPES.SPECTATOR]: 'Cast your judgement'
 };
 
-function BattleInfo({ topic, userType, battleStatus }) {
+const BattleInfo = ({ topic, userType, battleStatus }) => {
     const isInLobby = battleStatus === 'lobby';
     return (
         <Box textAlign="center">
@@ -16,10 +16,10 @@ function BattleInfo({ topic, userType, battleStatus }) {
                 <Box fontWeight="bold">{topic} </Box>
             </Typography>
             <Typography variant="h5">
-                {isInLobby ? 'Waiting for opponent...' : phrasesUserTypeMap[userType]}
+                {isInLobby ? 'Laukiama priešininko...' : phrasesUserTypeMap[userType]}
             </Typography>
         </Box>
     );
-}
+};
 
 export { BattleInfo };

@@ -38,16 +38,16 @@ function UserProvider({ children }) {
         setUser(await getUser());
     }
 
-    async function loginUser({ username, password }) {
-        const response = await login({ username, password });
+    async function loginUser({ email, password }) {
+        const response = await login({ email, password });
         if (!response.error) {
             setUser(await getUser());
         }
         return response;
     }
 
-    async function postUser({ username, password, email }) {
-        const response = await create({ username, password, email });
+    async function postUser({ username, password, email, secretCode }) {
+        const response = await create({ username, password, email, secretCode });
         if (response.user) {
             await loginUser({ username, password });
         }

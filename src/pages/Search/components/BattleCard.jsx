@@ -42,7 +42,7 @@ const BattleCard = ({ battle, routerHistory }) => {
                         </Box>
                         {status === 'lobby' && !isGuest && !isDefender && (
                             <Button size="large" onClick={attack}>
-                                Attack
+                                Pulti
                             </Button>
                         )}
                     </Box>

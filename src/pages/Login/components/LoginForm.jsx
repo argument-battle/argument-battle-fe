@@ -12,7 +12,7 @@ import validationSchema from '../validationSchema';
 const LoginForm = ({ routerHistory }) => {
     const { loginUser } = useContext(UserContext);
     const [inputs, { setValue, validateInput, validateInputs, getValues }] = useForm(
-        { username: '', password: '' },
+        { email: '', password: '' },
         validationSchema
     );
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,31 +37,33 @@ const LoginForm = ({ routerHistory }) => {
 
         if (response.error) {
             setIsSubmitting(false);
-            pushErrorMessage('Login failed, wrong user credentials');
+            pushErrorMessage('Prisijungimas nepavyko');
         } else {
             routerHistory.push('/');
         }
     };
 
-    const { username, password } = inputs;
+    const { email, password } = inputs;
 
     return (
-        <Form onSubmit={handleSubmit} header="LOG IN" footer={FormFooter}>
+        <Form onSubmit={handleSubmit} header="PRISIJUNGTI" footer={FormFooter}>
             <Input
-                label={'username'}
-                value={username.value}
+                label={'El. paštas'}
+                name={'email'}
+                value={email.value}
                 onChange={setValue}
-                error={username.error}
+                error={email.error}
                 onBlur={validateInput}
             />
             <PasswordInput
-                label={'password'}
+                label={'Slaptažodis'}
+                name={'password'}
                 value={password.value}
                 onChange={setValue}
                 error={password.error}
                 onBlur={validateInput}
             />
-            <SubmitInput disabled={isSubmitting} value="Log in" />
+            <SubmitInput disabled={isSubmitting} value="Prisijungti" />
         </Form>
     );
 };

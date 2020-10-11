@@ -7,9 +7,9 @@ import { PAGE_PATHS } from '../../../Router';
 const GuestSubHeader = () => {
     return (
         <Typography>
-            <Link to={PAGE_PATHS.LOG_IN}>Log in</Link>
+            <Link to={PAGE_PATHS.LOG_IN}>Prisijungti</Link>
             {' | '}
-            <Link to={PAGE_PATHS.SIGN_UP}>Sign up</Link>
+            <Link to={PAGE_PATHS.SIGN_UP}>Registruotis</Link>
         </Typography>
     );
 };

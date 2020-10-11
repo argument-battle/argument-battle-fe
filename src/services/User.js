@@ -1,7 +1,7 @@
-const postUser = async ({ username, email, password }) => {
+const postUser = async ({ username, email, password, secretCode }) => {
     const response = await fetch('/api/users', {
         method: 'POST',
-        body: JSON.stringify({ username, email, password }),
+        body: JSON.stringify({ username, email, password, secretCode }),
         headers: { 'Content-Type': 'application/json' }
     });
     return await response.json();
@@ -25,10 +25,10 @@ const logoutUser = async () => {
     return await response.json();
 };
 
-const loginUser = async ({ username, password }) => {
+const loginUser = async ({ email, password }) => {
     const response = await fetch('/api/users/login', {
         method: 'POST',
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
         headers: { 'Content-Type': 'application/json' }
     });
     return await response.json();

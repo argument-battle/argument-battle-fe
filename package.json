@@ -5,7 +5,7 @@
     "main": "server/index.js",
     "scripts": {
         "start": "env NODE_ENV=production node server",
-        "dev": "env NODE_ENV=development nodemon server",
+        "dev": "env NODE_ENV=development nodemon --inspect server",
         "test": "echo no test",
         "lint": "eslint \"./src/**\" \"./server/**\""
     },
@@ -40,7 +40,7 @@
         "gravatar": "^1.8.0",
         "jsonwebtoken": "^8.5.1",
         "lodash.startcase": "^4.4.0",
-        "mongoose": "^5.9.5",
+        "mongoose": "5.10.9",
         "notistack": "^0.9.9",
         "parcel-bundler": "^1.12.4",
         "parcel-plugin-bundle-visualiser": "^1.2.0",

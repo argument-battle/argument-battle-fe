@@ -8,7 +8,7 @@ const BattleCards = ({ routerHistory, battles, totalPages }) => (
             battles.map((battle, i) => <BattleCard key={i} {...{ battle, routerHistory }} />)
         ) : (
             <Box textAlign="center">
-                <Typography>No battles found</Typography>
+                <Typography>Nerasta debatų</Typography>
             </Box>
         )}
     </Box>

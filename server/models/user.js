@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    isModerator: {
+        type: Boolean,
+        default: false
+    },
     battles: [
         {
             type: ObjectId,
@@ -25,6 +29,10 @@ const userSchema = new mongoose.Schema({
     avatarUrl: {
         type: String,
         required: true
+    },
+    debateClub: {
+        type: ObjectId,
+        ref: 'DebateClub'
     }
 });
 

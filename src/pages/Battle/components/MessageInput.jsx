@@ -34,7 +34,7 @@ function MessageInput({ battleId, battleStatus }) {
                 onChange={e => setContent(e.target.value)}
                 value={content}
                 disabled={isSending || isInLobby}
-                placeholder={isInLobby ? 'Waiting for opponent...' : ''}
+                placeholder={isInLobby ? 'Laukiama priešininko...' : ''}
             />
         </Box>
     );

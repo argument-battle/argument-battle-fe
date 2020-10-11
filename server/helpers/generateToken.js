@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 const expiresIn = '10h';
 
-function generateToken({ username, password }) {
-    return jwt.sign({ username, password }, process.env.JWT_KEY, {
+function generateToken({ email, password }) {
+    return jwt.sign({ email, password }, process.env.JWT_KEY, {
         expiresIn
     });
 }

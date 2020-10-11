@@ -5,7 +5,7 @@ import { Battle } from './components/Battle';
 
 const BattlePage = ({ match }) => {
     const { initializeLayout } = useContext(LayoutDataContext);
-    useEffect(() => initializeLayout(), []);
+    useEffect(() => initializeLayout(), [initializeLayout]);
 
     return (
         <Container component="main" disableGutters={true} maxWidth={false}>

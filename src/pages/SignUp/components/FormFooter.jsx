@@ -5,9 +5,9 @@ import { PAGE_PATHS } from '../../../Router';
 
 const FormFooter = () => (
     <>
-        <Typography>Already have an account?&nbsp;</Typography>
+        <Typography>Jau esi užsiregistravęs?&nbsp;</Typography>
         <Link variant="body1" to={PAGE_PATHS.LOG_IN}>
-            Log in
+            Prisijunk
         </Link>
     </>
 );
