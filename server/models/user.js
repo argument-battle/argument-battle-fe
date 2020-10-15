@@ -20,22 +20,15 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    battles: [
-        {
-            type: ObjectId,
-            ref: 'Battle'
-        }
-    ],
+    debates: [{ type: ObjectId, ref: 'debate' }],
     avatarUrl: {
         type: String,
         required: true
     },
-    debateClub: {
-        type: ObjectId,
-        ref: 'DebateClub'
-    }
+    debateClub: { type: ObjectId, ref: 'debateclub' },
+    ratings: [{ type: ObjectId, ref: 'argument' }]
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('user', userSchema);
 
 module.exports = User;
