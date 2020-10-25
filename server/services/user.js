@@ -8,6 +8,8 @@ async function getMe(_, res) {
     const userId = res.locals.user._id.toString();
     const user = await User.findById(userId)
         .populate({ path: 'debateClub', select: 'name' })
+        .populate({ path: 'unjoinedDebates', select: 'topic' })
+        .populate({ path: 'moderatedDebates', select: 'topic' })
         .lean();
     res.status(200).send(user);
 }

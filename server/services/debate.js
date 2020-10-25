@@ -21,26 +21,33 @@ async function create(req, res) {
         debate.teams = teams.map(e => e._id);
         await debate.save();
 
-        const rounds = new Array(roundCount).fill({ debate: debate._id });
+        const rounds = Array(Number(roundCount)).fill({
+            debate: debate._id
+        });
         const savedRounds = await Round.insertMany(rounds);
         debate.rounds = savedRounds.map(e => e._id);
         await debate.save();
 
         await Promise.all(
-            participatingClubIds.map(
-                async clubId =>
-                    await User.updateMany(
-                        { debateClub: clubId },
-                        {
-                            $push: {
-                                unjoinedDebates: '5f94bf02e7b3160fe8a67c1f' // debate._id
-                            }
+            participatingClubIds.map(async clubId => {
+                await User.updateMany(
+                    { debateClub: clubId, _id: { $ne: user._id } },
+                    {
+                        $push: {
+                            unjoinedDebates: debate._id
                         }
-                    )
-            )
+                    }
+                );
+            })
         );
 
-        res.status(201).send(debate);
+        await User.findByIdAndUpdate(user._id, {
+            $push: {
+                moderatedDebates: debate._id
+            }
+        });
+
+        res.status(201); //.send(debate);
     } catch (error) {
         res.status(500).send({ error });
     }

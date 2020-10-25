@@ -8,9 +8,15 @@ import {
 } from '@material-ui/core';
 import { Search, Add } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
-import { PAGE_PATHS } from '../../Router';
-import { ActiveBattles } from './ActiveBattles';
-import { UserContext } from '../../providers/user';
+import { PAGE_PATHS } from '../../../Router';
+import { DebateList } from './DebateList';
+import { UserContext } from '../../../providers/user';
+import {
+    SpeakerNotes,
+    Visibility,
+    BorderColor,
+    ArtTrack
+} from '@material-ui/icons';
 
 const NavList = () => {
     const { user } = useContext(UserContext);
@@ -18,10 +24,23 @@ const NavList = () => {
         <List>
             {!user.isGuest && (
                 <>
-                    <ActiveBattles />
-                    <Divider />
+                    {user.isModerator && (
+                        <DebateList
+                            name="Moderuojami"
+                            debates={user.moderatedDebates}
+                            icon={<BorderColor />}
+                        />
+                    )}
+                    <DebateList name="Vykstantys" icon={<SpeakerNotes />} />
+                    <DebateList
+                        name="Kvietimai"
+                        icon={<ArtTrack />}
+                        debates={user.unjoinedDebates}
+                    />
                 </>
             )}
+            <DebateList name="Stebimi" icon={<Visibility />} />
+            <Divider />
             <ListItem
                 button
                 key="Search rooms"
