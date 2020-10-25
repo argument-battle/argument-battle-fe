@@ -8,6 +8,9 @@ import { Spinner } from '../../shared/components/Spinner';
 import NotFound from '../../shared/components/NotFound';
 import { TeamSelect } from './TeamSelect';
 import useStyles from './styles/DebatePage';
+import { ArgumentInput } from './ArgumentInput';
+import { ArgumentList } from './ArgumentList';
+import socket from '../../shared/socket';
 
 const DebatePage = () => {
     const classes = useStyles();
@@ -19,25 +22,36 @@ const DebatePage = () => {
     const [debate, setDebate] = useState(null);
     const { user } = useContext(UserContext);
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const fetchDebate = useCallback(async () => {
+        setIsLoading(true);
         const debate = await getDebate({ id: debateId });
-        console.log(debate);
+        setIsLoading(false);
         setDebate(debate);
     }, [debateId]);
 
     useEffect(() => {
         fetchDebate();
-    }, [fetchDebate]);
+        socket.emit('join debate', debateId);
+        socket.on('debate update', () => {
+            fetchDebate();
+        });
+        return () => {
+            socket.emit('leave debate', debateId);
+            socket.off('battle update');
+        };
+    }, [debateId, fetchDebate]);
 
-    if (!debate) {
+    if (!debate || isLoading) {
         return <Spinner />;
     } else if (!debate._id) {
         return <NotFound />;
     }
 
-    const isUserInATeam = user.activeDebates.some(e => e._id === debate._id);
+    const isUserInATeam = user.activeDebates?.some(e => e._id === debate._id);
     const isModerator = debate.creator._id === user._id;
-    if (!isUserInATeam && !isModerator) {
+    if (!user.isGuest && !isUserInATeam && !isModerator) {
         return (
             <Container component="main" className={classes.container}>
                 <TeamSelect debate={debate} />
@@ -45,9 +59,22 @@ const DebatePage = () => {
         );
     }
 
+    const isSpectator =
+        isModerator ||
+        user.isGuest ||
+        debate.participatingClubs.some(e => e._id !== user.debateClub._id);
+
+    const hasDebateEnded = debate.status === 'ended';
+
     return (
-        <Container component="main" disableGutters={true} maxWidth={false}>
-            <></>
+        <Container component="main" className={classes.container}>
+            <ArgumentList debate={debate} />
+            {!isSpectator && !hasDebateEnded && !user.isGuest && (
+                <ArgumentInput
+                    debateId={debate._id}
+                    debateStatus={debate.status}
+                />
+            )}
         </Container>
     );
 };

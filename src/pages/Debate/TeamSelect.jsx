@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Button } from '@material-ui/core';
-import { FormHeader } from '../../../shared/components/Form/FormHeader';
-import { joinTeam } from '../../../services/Debate';
+import { FormHeader } from '../../shared/components/Form/FormHeader';
+import { joinTeam } from '../../services/Debate';
+import { UserContext } from '../../providers/user';
 
 const TeamSelect = ({ debate }) => {
+    const { getUser } = useContext(UserContext);
     const teams = debate.teams;
     console.log(teams);
 
-    const handleClick = team => () => {
-        joinTeam({ debateId: debate._id, teamId: team._id });
+    const handleClick = team => async () => {
+        await joinTeam({ debateId: debate._id, teamId: team._id });
+        await getUser();
     };
 
     return (

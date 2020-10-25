@@ -18,9 +18,31 @@ const getDebate = async ({ id }) => {
 
 const joinTeam = async ({ debateId, teamId }) => {
     const response = await fetch(`/api/debates/${debateId}/teams/${teamId}`, {
-        method: 'PUT'
+        method: 'POST'
     });
     return await response.json();
 };
 
-export { postDebate, getDebate, joinTeam };
+const postArgument = async ({ content, debateId }) => {
+    const response = await fetch(`/api/debates/${debateId}/arguments`, {
+        method: 'POST',
+        body: JSON.stringify({ content }),
+        headers: { 'Content-Type': 'application/json' }
+    });
+    return await response.json();
+};
+
+const getCurrentRoundArguments = async ({ debateId }) => {
+    const response = await fetch(
+        `/api/debates/${debateId}/rounds/current/arguments`
+    );
+    return await response.json();
+};
+
+export {
+    postDebate,
+    getDebate,
+    joinTeam,
+    postArgument,
+    getCurrentRoundArguments
+};

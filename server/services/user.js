@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const DebateClub = require('../models/debateClub');
+const Debate = require('../models/debate');
 const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
 const generateToken = require('../helpers/generateToken');
@@ -34,6 +35,14 @@ async function create(req, res) {
         if (!debateClub) {
             throw new Error('Debate club does not exist');
         }
+        const debates = await Debate.find({
+            participatingClubs: {
+                $in: [debateClub._id]
+            },
+            status: 'inactive'
+        });
+        const debateIds = debates.map(e => e._id);
+
         const hash = await bcrypt.hash(password, salt);
         const avatarUrl = gravatar.url(
             email,
@@ -45,7 +54,8 @@ async function create(req, res) {
             ...req.body,
             password: hash,
             avatarUrl,
-            debateClub: debateClub._id
+            debateClub: debateClub._id,
+            unjoinedDebates: debateIds
         });
 
         await user.save();

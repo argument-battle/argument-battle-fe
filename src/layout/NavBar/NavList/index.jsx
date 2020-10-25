@@ -11,12 +11,7 @@ import { Link } from 'react-router-dom';
 import { PAGE_PATHS } from '../../../Router';
 import { DebateList } from './DebateList';
 import { UserContext } from '../../../providers/user';
-import {
-    SpeakerNotes,
-    Visibility,
-    BorderColor,
-    ArtTrack
-} from '@material-ui/icons';
+import { SpeakerNotes, BorderColor, ArtTrack } from '@material-ui/icons';
 
 const NavList = () => {
     const { user } = useContext(UserContext);
@@ -41,10 +36,9 @@ const NavList = () => {
                         icon={<ArtTrack />}
                         debates={user.unjoinedDebates}
                     />
+                    <Divider />
                 </>
             )}
-            <DebateList name="Stebimi" icon={<Visibility />} />
-            <Divider />
             <ListItem
                 button
                 key="Search rooms"

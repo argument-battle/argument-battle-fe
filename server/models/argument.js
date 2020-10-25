@@ -11,7 +11,8 @@ const argumentSchema = new mongoose.Schema(
                 rating: Number
             }
         ],
-        user: { type: ObjectId, ref: 'user' }
+        user: { type: ObjectId, ref: 'user' },
+        team: { type: ObjectId, ref: 'team' }
     },
     { timestamps: true }
 );

@@ -1,19 +1,15 @@
 function socketEvents(io) {
     io.on('connection', socket => {
-        socket.on('join battle', battleId => {
-            socket.join(battleId);
+        socket.on('join debate', debateId => {
+            socket.join(debateId).emit('debate update', null);
         });
 
-        socket.on('leave battle', battleId => {
-            socket.leave(battleId);
+        socket.on('leave debate', debateId => {
+            socket.leave(debateId);
         });
 
-        socket.on('send message', battleId => {
-            io.in(battleId).emit('new message', null);
-        });
-
-        socket.on('join as attacker', battleId => {
-            io.to(battleId).emit('battle update', null);
+        socket.on('send argument', debateId => {
+            io.in(debateId).emit('new argument', null);
         });
     });
 }

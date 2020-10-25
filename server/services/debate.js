@@ -2,6 +2,7 @@ const Debate = require('../models/debate');
 const Round = require('../models/round');
 const User = require('../models/user');
 const Team = require('../models/team');
+const Argument = require('../models/argument');
 
 async function create(req, res) {
     const { topic, participatingClubIds, roundCount } = req.body;
@@ -59,6 +60,7 @@ async function getById(req, res) {
         const debate = await Debate.findById(debateId)
             .populate({
                 path: 'teams',
+                select: 'members debate name',
                 populate: {
                     path: 'members',
                     select: 'username'
@@ -91,4 +93,50 @@ async function joinTeam(req, res) {
     }
 }
 
-module.exports = { create, getById, joinTeam };
+async function getCurrentRoundArguments(req, res) {
+    const { debateId } = req.params;
+    try {
+        const rounds = await Round.find({
+            debate: debateId,
+            status: 'active'
+        })
+            .populate({ path: 'arguments', select: 'rating content user team' })
+            .lean();
+        const args = rounds.map(e => e.arguments).flat();
+        res.status(200).send(args);
+    } catch (error) {
+        res.status(500).send({ error });
+    }
+}
+
+async function addArg(req, res) {
+    const { debateId } = req.params;
+    const { content } = req.body;
+    const user = res.locals.user._id;
+    try {
+        const team = await Team.findOne({
+            debate: debateId,
+            members: user
+        });
+        const argument = await Argument.create({
+            content,
+            user,
+            team: team._id
+        });
+        await Round.findOneAndUpdate(
+            { debate: debateId, status: 'active' },
+            { $push: { arguments: argument._id } }
+        );
+        res.status(200).send({});
+    } catch (error) {
+        res.status(500).send({ error });
+    }
+}
+
+module.exports = {
+    create,
+    getById,
+    joinTeam,
+    getCurrentRoundArguments,
+    addArg
+};
