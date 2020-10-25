@@ -10,7 +10,7 @@ import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { NavDebate } from './NavDebate';
 
 const DebateList = ({ name, debates = [], icon }) => {
-    const [isOpen, setIsOpen] = useState(!debates.length);
+    const [isOpen, setIsOpen] = useState(debates.length <= 3);
 
     return (
         <>

@@ -11,4 +11,16 @@ const postDebate = async ({ topic, debateClub, roundCount }) => {
     return await response.json();
 };
 
-export { postDebate };
+const getDebate = async ({ id }) => {
+    const response = await fetch(`/api/debates/${id}`);
+    return await response.json();
+};
+
+const joinTeam = async ({ debateId, teamId }) => {
+    const response = await fetch(`/api/debates/${debateId}/teams/${teamId}`, {
+        method: 'PUT'
+    });
+    return await response.json();
+};
+
+export { postDebate, getDebate, joinTeam };

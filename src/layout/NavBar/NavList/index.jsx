@@ -31,7 +31,11 @@ const NavList = () => {
                             icon={<BorderColor />}
                         />
                     )}
-                    <DebateList name="Vykstantys" icon={<SpeakerNotes />} />
+                    <DebateList
+                        name="Vykstantys"
+                        icon={<SpeakerNotes />}
+                        debates={user.activeDebates}
+                    />
                     <DebateList
                         name="Kvietimai"
                         icon={<ArtTrack />}

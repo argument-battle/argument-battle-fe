@@ -26,6 +26,7 @@ const userSchema = new mongoose.Schema({
     },
     debateClub: { type: ObjectId, ref: 'debateclub' },
     unjoinedDebates: [{ type: ObjectId, ref: 'debate' }],
+    activeDebates: [{ type: ObjectId, ref: 'debate' }],
     moderatedDebates: [{ type: ObjectId, ref: 'debate' }]
 });
 

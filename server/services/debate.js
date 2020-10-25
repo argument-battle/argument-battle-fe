@@ -53,4 +53,42 @@ async function create(req, res) {
     }
 }
 
-module.exports = { create };
+async function getById(req, res) {
+    const { debateId } = req.params;
+    try {
+        const debate = await Debate.findById(debateId)
+            .populate({
+                path: 'teams',
+                populate: {
+                    path: 'members',
+                    select: 'username'
+                }
+            })
+            .populate({ path: 'participatingClubs', select: 'name' })
+            .populate({ path: 'rounds', select: 'status arguments' })
+            .populate({ path: 'creator', select: 'username' })
+            .lean();
+
+        res.status(200).send(debate);
+    } catch (error) {
+        res.status(500).send({ error });
+    }
+}
+
+async function joinTeam(req, res) {
+    const { debateId, teamId } = req.params;
+    const userId = res.locals.user._id;
+
+    try {
+        await Team.findByIdAndUpdate(teamId, { $push: { members: userId } });
+        await User.findByIdAndUpdate(userId, {
+            $push: { activeDebates: debateId },
+            $pull: { unjoinedDebates: debateId }
+        });
+        res.status(200).send({});
+    } catch (error) {
+        res.status(500).send({ error });
+    }
+}
+
+module.exports = { create, getById, joinTeam };

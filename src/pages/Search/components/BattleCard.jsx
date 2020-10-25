@@ -20,11 +20,11 @@ const BattleCard = ({ battle, routerHistory }) => {
     const attack = async () => {
         await joinBattle(_id);
         socket.emit('join as attacker', _id);
-        routerHistory.push(`${PAGE_PATHS.BATTLE}/${_id}`);
+        routerHistory.push(`${PAGE_PATHS.DEBATE}/${_id}`);
     };
 
     const spectate = () => {
-        routerHistory.push(`${PAGE_PATHS.BATTLE}/${_id}`);
+        routerHistory.push(`${PAGE_PATHS.DEBATE}/${_id}`);
     };
 
     return (

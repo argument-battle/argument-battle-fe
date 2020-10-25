@@ -9,6 +9,7 @@ async function getMe(_, res) {
     const user = await User.findById(userId)
         .populate({ path: 'debateClub', select: 'name' })
         .populate({ path: 'unjoinedDebates', select: 'topic' })
+        .populate({ path: 'activeDebates', select: 'topic' })
         .populate({ path: 'moderatedDebates', select: 'topic' })
         .lean();
     res.status(200).send(user);

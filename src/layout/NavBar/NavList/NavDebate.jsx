@@ -14,7 +14,7 @@ const NavDebate = ({ debate }) => {
             button
             className={classes.nested}
             component={Link}
-            to={PAGE_PATHS.BATTLE + '/' + _id}
+            to={PAGE_PATHS.DEBATE + '/' + _id}
         >
             <ListItemText primary={topic} />
         </ListItem>

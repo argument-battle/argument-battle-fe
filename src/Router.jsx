@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { SearchPage } from './pages/Search';
 import { CreatePage } from './pages/Create';
-import { BattlePage } from './pages/Battle';
+import { DebatePage } from './pages/Debate';
 import { SignUpPage } from './pages/SignUp';
 import { NotFoundPage } from './pages/NotFound';
 import { LoginPage } from './pages/Login';
@@ -12,7 +12,7 @@ import { PrivateRoute, GuestOnlyRoute } from './shared/components/Routes';
 const PAGE_PATHS = {
     HOME: '/',
     SEARCH: '/paieska',
-    BATTLE: '/debatai',
+    DEBATE: '/debatai',
     CREATE: '/sukurti',
     SIGN_UP: '/registracija',
     LOG_IN: '/prisijungimas'
@@ -40,8 +40,8 @@ const Router = () => {
             <Route exact path={PAGE_PATHS.SEARCH} component={SearchPage} />
             <Route
                 exact
-                path={`${PAGE_PATHS.BATTLE}/:battleId`}
-                component={BattlePage}
+                path={`${PAGE_PATHS.DEBATE}/:debateId`}
+                component={DebatePage}
             />
             <Route component={NotFoundPage} />
         </Switch>

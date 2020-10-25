@@ -8,6 +8,12 @@ const MUITheme = createMuiTheme({
         secondary: {
             main: '#83CDC0'
         },
+        teamRed: {
+            main: '#F2DEDE'
+        },
+        teamGreen: {
+            main: '#E6EFEB'
+        },
         background: {
             paper: '#CBDCD7',
             default: '#e6efeb'
