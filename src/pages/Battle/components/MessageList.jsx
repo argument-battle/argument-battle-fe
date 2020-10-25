@@ -42,7 +42,10 @@ const MessageList = ({ battle, userType }) => {
         const isAttackerView = userType === USER_TYPES.ATTACKER;
         const isDefenderMessage = user === battle.defender._id;
 
-        if ((isAttackerView && !isDefenderMessage) || (!isAttackerView && isDefenderMessage)) {
+        if (
+            (isAttackerView && !isDefenderMessage) ||
+            (!isAttackerView && isDefenderMessage)
+        ) {
             return DIRECTION.LEFT;
         } else {
             return DIRECTION.RIGHT;
@@ -58,7 +61,13 @@ const MessageList = ({ battle, userType }) => {
     }
 
     return (
-        <Box flex={2} flexDirection="column" overflow="auto" marginX="40px" ref={messageListElRef}>
+        <Box
+            flex={2}
+            flexDirection="column"
+            overflow="auto"
+            marginX="40px"
+            ref={messageListElRef}
+        >
             {messages.map(({ content, user }, index) => (
                 <Message
                     key={index}

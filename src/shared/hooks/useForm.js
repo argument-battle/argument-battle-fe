@@ -11,7 +11,11 @@ function structureInitialInputs(initialInputs) {
     return structedInitialInputs;
 }
 
-export default function useForm(initialInputs, validationSchema) {
+export default function useForm(
+    initialInputs,
+    validationSchema,
+    { defaultMessage = 'error' } = {}
+) {
     const [inputs, setInputs] = useState(structureInitialInputs(initialInputs));
 
     function setInput({ name, value, field }) {
@@ -49,7 +53,8 @@ export default function useForm(initialInputs, validationSchema) {
             await validationSchema.validateAt(name, getValues());
             setError({ name, value: '' });
         } catch (err) {
-            setError({ name, value: err.message });
+            console.log(err);
+            setError({ name, value: err.message || defaultMessage });
         }
     }
 
@@ -61,11 +66,17 @@ export default function useForm(initialInputs, validationSchema) {
             });
             return true;
         } catch (err) {
-            err.inner.forEach(({ path, message }) => (inputs[path].error = message));
+            console.log(err.inner);
+            err.inner.forEach(
+                ({ path, message }) => (inputs[path].error = message)
+            );
             setInputs({ ...inputs });
             return false;
         }
     }
 
-    return [inputs, { setValue, getValues, validateInputs, validateInput, setError }];
+    return [
+        inputs,
+        { setValue, getValues, validateInputs, validateInput, setError }
+    ];
 }

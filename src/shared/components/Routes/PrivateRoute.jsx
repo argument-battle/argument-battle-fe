@@ -9,7 +9,13 @@ const PrivateRoute = props => {
     return (
         <Route
             {...rest}
-            render={props => (user.isGuest ? <Redirect to="/login" /> : <Component {...props} />)}
+            render={props =>
+                user.isGuest ? (
+                    <Redirect to="/login" />
+                ) : (
+                    <Component {...props} />
+                )
+            }
         />
     );
 };

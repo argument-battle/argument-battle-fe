@@ -5,7 +5,7 @@ import NotFound from '../../shared/components/NotFound';
 
 const NotFoundPage = () => {
     const { initializeLayout } = useContext(LayoutDataContext);
-    useEffect(() => initializeLayout(), []);
+    useEffect(() => initializeLayout(), [initializeLayout]);
     return (
         <Container component="main">
             <NotFound />

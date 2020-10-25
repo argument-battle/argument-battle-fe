@@ -1,5 +1,9 @@
 import React, { useState, useCallback, useContext } from 'react';
-import { Input, PasswordInput, SubmitInput } from '../../../shared/components/Inputs';
+import {
+    Input,
+    PasswordInput,
+    SubmitInput
+} from '../../../shared/components/Inputs';
 import { Form } from '../../../shared/components/Form';
 import { FormFooter } from './FormFooter';
 import { useSnackbar } from 'notistack';
@@ -11,17 +15,17 @@ import validationSchema from '../validationSchema';
 
 const LoginForm = ({ routerHistory }) => {
     const { loginUser } = useContext(UserContext);
-    const [inputs, { setValue, validateInput, validateInputs, getValues }] = useForm(
-        { email: '', password: '' },
-        validationSchema
-    );
+    const [
+        inputs,
+        { setValue, validateInput, validateInputs, getValues }
+    ] = useForm({ email: '', password: '' }, validationSchema);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const { enqueueSnackbar } = useSnackbar();
-    const pushErrorMessage = useCallback(pushErrorMessageFactory(enqueueSnackbar), [
-        enqueueSnackbar,
-        pushErrorMessageFactory
-    ]);
+    const pushErrorMessage = useCallback(
+        pushErrorMessageFactory(enqueueSnackbar),
+        [enqueueSnackbar, pushErrorMessageFactory]
+    );
 
     const handleSubmit = async event => {
         event.preventDefault();

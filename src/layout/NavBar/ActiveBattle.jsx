@@ -19,7 +19,9 @@ const ActiveBattle = ({ battle }) => {
             component={Link}
             to={PAGE_PATHS.BATTLE + '/' + _id}
         >
-            <ListItemIcon>{isSpectating ? <Visibility /> : <SpeakerNotes />}</ListItemIcon>
+            <ListItemIcon>
+                {isSpectating ? <Visibility /> : <SpeakerNotes />}
+            </ListItemIcon>
             <ListItemText primary={topic} />
         </ListItem>
     );

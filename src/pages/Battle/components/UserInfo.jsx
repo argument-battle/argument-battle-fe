@@ -9,7 +9,9 @@ const UserInfo = ({ username, avatarUrl, textPosition, userType }) => {
     return (
         <Box
             display="flex"
-            flexDirection={textPosition === DIRECTION.RIGHT ? 'row' : 'row-reverse'}
+            flexDirection={
+                textPosition === DIRECTION.RIGHT ? 'row' : 'row-reverse'
+            }
         >
             <Box width="100px" height="100px">
                 <Avatar username={_username} avatarUrl={avatarUrl || ''} />

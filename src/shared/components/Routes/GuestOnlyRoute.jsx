@@ -9,7 +9,9 @@ const GuestOnlyRoute = props => {
     return (
         <Route
             {...rest}
-            render={props => (user.isGuest ? <Component {...props} /> : <Redirect to="/" />)}
+            render={props =>
+                user.isGuest ? <Component {...props} /> : <Redirect to="/" />
+            }
         />
     );
 };

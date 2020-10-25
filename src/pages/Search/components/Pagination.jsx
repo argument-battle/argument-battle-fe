@@ -22,7 +22,11 @@ const Pagination = ({ location, page, totalPages }) => {
                 page={page}
                 count={totalPages}
                 renderItem={item => (
-                    <PaginationItem component={Link} to={makePageUrl(item.page)} {...item} />
+                    <PaginationItem
+                        component={Link}
+                        to={makePageUrl(item.page)}
+                        {...item}
+                    />
                 )}
             />
         </Box>

@@ -22,7 +22,11 @@ const BattleHeader = ({ battle, userType }) => {
                 userType={USER_TYPES.DEFENDER}
                 textPosition={DIRECTION.RIGHT}
             />
-            <BattleInfo topic={topic} userType={userType} battleStatus={status} />
+            <BattleInfo
+                topic={topic}
+                userType={userType}
+                battleStatus={status}
+            />
 
             <UserInfo
                 username={attacker?.username}

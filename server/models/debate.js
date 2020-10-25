@@ -12,27 +12,14 @@ const debateSchema = new mongoose.Schema(
         },
         startedAt: Date,
         endedAt: Date,
-        teams: [
-            {
-                name: { type: String, required: true, unique: true },
-                members: [{ type: ObjectId, ref: 'user' }]
-            }
-        ],
-        arguments: [{ type: ObjectId, ref: 'argument' }],
+        teams: [{ type: ObjectId, ref: 'team' }],
+        winnerTeam: { type: ObjectId, ref: 'team' },
         creator: { type: ObjectId, ref: 'user' },
         participatingClubs: [{ type: ObjectId, ref: 'debateclub' }],
         rounds: [{ type: ObjectId, ref: 'round' }]
     },
     { timestamps: true }
 );
-
-debateSchema.post('save', async (doc, next) => {
-    const User = require('./user');
-    const { defender, _id } = doc;
-
-    await User.findByIdAndUpdate(defender, { $push: { debates: _id } });
-    next();
-});
 
 const Debate = mongoose.model('debate', debateSchema);
 

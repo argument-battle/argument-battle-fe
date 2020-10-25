@@ -1,6 +1,10 @@
 import React, { useState, useContext } from 'react';
 
-import { Input, PasswordInput, SubmitInput } from '../../../shared/components/Inputs';
+import {
+    Input,
+    PasswordInput,
+    SubmitInput
+} from '../../../shared/components/Inputs';
 import { Form } from '../../../shared/components/Form';
 import { FormFooter } from './FormFooter';
 
@@ -9,8 +13,17 @@ import validationSchema from '../validationSchema';
 import { UserContext } from '../../../providers/user';
 
 const SignUpForm = ({ routerHistory }) => {
-    const [inputs, { setValue, validateInput, validateInputs, getValues, setError }] = useForm(
-        { username: '', email: '', password: '', confirmPassword: '', secretCode: '' },
+    const [
+        inputs,
+        { setValue, validateInput, validateInputs, getValues, setError }
+    ] = useForm(
+        {
+            username: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            secretCode: ''
+        },
         validationSchema
     );
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,12 +45,19 @@ const SignUpForm = ({ routerHistory }) => {
             setIsSubmitting(false);
 
             const error = response.error.errmsg || '';
-            const isUsernameDuplicate = ['username', 'duplicate'].every(el => error.includes(el));
+            const isUsernameDuplicate = ['username', 'duplicate'].every(el =>
+                error.includes(el)
+            );
             if (isUsernameDuplicate) {
-                setError({ name: 'username', value: 'Username is already taken' });
+                setError({
+                    name: 'username',
+                    value: 'Username is already taken'
+                });
                 return;
             }
-            const isEmailDuplicate = ['email', 'duplicate'].every(el => error.includes(el));
+            const isEmailDuplicate = ['email', 'duplicate'].every(el =>
+                error.includes(el)
+            );
             if (isEmailDuplicate) {
                 setError({ name: 'email', value: 'Email is already taken' });
                 return;

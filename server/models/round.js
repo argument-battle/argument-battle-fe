@@ -11,18 +11,11 @@ const roundSchema = new mongoose.Schema(
             enum: ['inactive', 'active', 'ended'],
             default: 'inactive'
         },
-        arguments: [{ type: ObjectId, ref: 'argument' }]
+        arguments: [{ type: ObjectId, ref: 'argument' }],
+        debate: { type: ObjectId, ref: 'debate' }
     },
     { timestamps: true }
 );
-
-roundSchema.post('save', async (doc, next) => {
-    const Debate = require('./debate');
-    const { debate, _id } = doc;
-
-    await Debate.findByIdAndUpdate(debate, { $push: { rounds: _id } });
-    next();
-});
 
 const Round = mongoose.model('round', roundSchema);
 

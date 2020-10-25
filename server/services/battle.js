@@ -40,7 +40,9 @@ async function getAll(req, res) {
             const battles = await Battle.find(findBy)
                 .select('-messages')
                 .sort({ createdAt: 'desc' });
-            return res.status(200).send({ totalCount: battles.length, battles });
+            return res
+                .status(200)
+                .send({ totalCount: battles.length, battles });
         }
 
         const battles = await Battle.find(findBy)
@@ -66,7 +68,9 @@ async function join(req, res) {
 
         const isDefender = battle.defender.toString() === user._id.toString();
         if (isDefender) {
-            return res.status(400).send({ error: 'You cant join your own battle' });
+            return res
+                .status(400)
+                .send({ error: 'You cant join your own battle' });
         } else if (battle.attacker) {
             return res.status(400).send({ error: 'Attacker already exists' });
         }

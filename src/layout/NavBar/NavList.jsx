@@ -1,5 +1,11 @@
 import React, { useContext } from 'react';
-import { List, ListItemIcon, ListItemText, Divider, ListItem } from '@material-ui/core';
+import {
+    List,
+    ListItemIcon,
+    ListItemText,
+    Divider,
+    ListItem
+} from '@material-ui/core';
 import { Search, Add } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { PAGE_PATHS } from '../../Router';
@@ -16,14 +22,24 @@ const NavList = () => {
                     <Divider />
                 </>
             )}
-            <ListItem button key="Search rooms" component={Link} to={PAGE_PATHS.SEARCH}>
+            <ListItem
+                button
+                key="Search rooms"
+                component={Link}
+                to={PAGE_PATHS.SEARCH}
+            >
                 <ListItemIcon>
                     <Search />
                 </ListItemIcon>
                 <ListItemText primary="Ieškoti debatų" />
             </ListItem>
             {user.isModerator && (
-                <ListItem button key="Create a room" component={Link} to={PAGE_PATHS.CREATE}>
+                <ListItem
+                    button
+                    key="Create a room"
+                    component={Link}
+                    to={PAGE_PATHS.CREATE}
+                >
                     <ListItemIcon>
                         <Add />
                     </ListItemIcon>

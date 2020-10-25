@@ -1,14 +1,11 @@
 const { Router } = require('express');
-const { getAll, getGuest, getMe, get, create, login, logout } = require('../services/user');
-const getUserMiddleware = require('../middleware/getUserMiddleware');
+const { getGuest, getMe, create, login, logout } = require('../services/user');
 const authUserMiddleware = require('../middleware/authUserMiddleware');
 
 const router = new Router();
 
 router.get('/guest', getGuest);
-router.get('/me', authUserMiddleware, getUserMiddleware, getMe);
-router.get('/:id', get);
-router.get('/', getAll);
+router.get('/me', authUserMiddleware, getMe);
 router.post('/', create);
 router.post('/login', login);
 router.post('/logout', logout);

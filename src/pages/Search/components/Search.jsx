@@ -21,7 +21,9 @@ const Search = ({ location, routerHistory }) => {
         if (topic) {
             queryParams.topic = topic;
         }
-        const { battles = [], totalPages = 10 } = await getAllBattles(queryParams);
+        const { battles = [], totalPages = 10 } = await getAllBattles(
+            queryParams
+        );
         if (!isUnmounted) {
             setBattles(battles);
             setTotalPages(totalPages);
@@ -39,7 +41,12 @@ const Search = ({ location, routerHistory }) => {
     return page > totalPages && totalPages !== 0 ? (
         <NotFoundPage />
     ) : (
-        <Box display="flex" flexDirection="column" alignItems="center" height="100%">
+        <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            height="100%"
+        >
             <SearchInput {...{ location, routerHistory, topic }} />
             <BattleCards {...{ routerHistory, battles, totalPages }} />
             <Pagination {...{ location, page, totalPages }} />

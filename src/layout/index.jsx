@@ -1,4 +1,10 @@
-import React, { createContext, useState, useCallback, useContext, useEffect } from 'react';
+import React, {
+    createContext,
+    useState,
+    useCallback,
+    useContext,
+    useEffect
+} from 'react';
 import { SnackbarProvider } from 'notistack';
 import { NavBar } from './NavBar';
 import { UserContext } from '../providers/user';

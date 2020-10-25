@@ -22,11 +22,27 @@ const Router = () => {
     return (
         <Switch>
             <Route exact path={PAGE_PATHS.HOME} component={HomePage} />
-            <GuestOnlyRoute exact path={PAGE_PATHS.SIGN_UP} component={SignUpPage} />
-            <GuestOnlyRoute exact path={PAGE_PATHS.LOG_IN} component={LoginPage} />
-            <PrivateRoute exact path={PAGE_PATHS.CREATE} component={CreatePage} />
+            <GuestOnlyRoute
+                exact
+                path={PAGE_PATHS.SIGN_UP}
+                component={SignUpPage}
+            />
+            <GuestOnlyRoute
+                exact
+                path={PAGE_PATHS.LOG_IN}
+                component={LoginPage}
+            />
+            <PrivateRoute
+                exact
+                path={PAGE_PATHS.CREATE}
+                component={CreatePage}
+            />
             <Route exact path={PAGE_PATHS.SEARCH} component={SearchPage} />
-            <Route exact path={`${PAGE_PATHS.BATTLE}/:battleId`} component={BattlePage} />
+            <Route
+                exact
+                path={`${PAGE_PATHS.BATTLE}/:battleId`}
+                component={BattlePage}
+            />
             <Route component={NotFoundPage} />
         </Switch>
     );

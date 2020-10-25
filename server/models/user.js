@@ -20,13 +20,12 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    debates: [{ type: ObjectId, ref: 'debate' }],
     avatarUrl: {
         type: String,
         required: true
     },
     debateClub: { type: ObjectId, ref: 'debateclub' },
-    ratings: [{ type: ObjectId, ref: 'argument' }]
+    unjoinedDebates: [{ type: ObjectId, ref: 'debate' }]
 });
 
 const User = mongoose.model('user', userSchema);

@@ -21,7 +21,9 @@ const getAllBattles = async (params = {}) => {
 };
 
 const joinBattle = async id => {
-    const response = await fetch(`/api/battles/${id}/join`, { method: 'PATCH' });
+    const response = await fetch(`/api/battles/${id}/join`, {
+        method: 'PATCH'
+    });
     return await response.json();
 };
 

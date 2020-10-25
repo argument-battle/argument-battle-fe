@@ -15,7 +15,9 @@ const SearchInput = ({ location, routerHistory, topic }) => {
             params.delete('topic');
         }
         const queryString = params.toString();
-        routerHistory.push(`${PAGE_PATHS.SEARCH}${queryString ? `?${queryString}` : ''}`);
+        routerHistory.push(
+            `${PAGE_PATHS.SEARCH}${queryString ? `?${queryString}` : ''}`
+        );
     };
 
     return (

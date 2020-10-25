@@ -68,10 +68,20 @@ const Battle = ({ id }) => {
     const isSpectator = userType === USER_TYPES.SPECTATOR;
 
     return (
-        <Box display="flex" flexDirection="column" height="100%" bgcolor={getBackgroundColor()}>
+        <Box
+            display="flex"
+            flexDirection="column"
+            height="100%"
+            bgcolor={getBackgroundColor()}
+        >
             <BattleHeader battle={battle} userType={userType} />
             <MessageList battle={battle} userType={userType} />
-            {!isSpectator && <MessageInput battleId={battle._id} battleStatus={battle?.status} />}
+            {!isSpectator && (
+                <MessageInput
+                    battleId={battle._id}
+                    battleStatus={battle?.status}
+                />
+            )}
         </Box>
     );
 };

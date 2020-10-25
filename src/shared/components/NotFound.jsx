@@ -12,7 +12,12 @@ const NotFound = ({ history }) => {
             flexDirection="column"
         >
             <Box fontSize="200px">404</Box>
-            <Box marginTop="-50px" fontSize="40px" fontWeight="lighter" marginBottom="40px">
+            <Box
+                marginTop="-50px"
+                fontSize="40px"
+                fontWeight="lighter"
+                marginBottom="40px"
+            >
                 PUSLAPIS NERASTAS
             </Box>
             <Button

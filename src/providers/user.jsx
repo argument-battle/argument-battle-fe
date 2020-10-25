@@ -13,8 +13,8 @@ function UserProvider({ children }) {
     const [user, setUser] = useState(null);
 
     async function getUser() {
-        const { user } = await getMe();
-        if (user) {
+        const user = await getMe();
+        if (!user.error) {
             setUser({ ...user, isGuest: false });
         } else {
             const guest = await getGuestUser();
@@ -47,15 +47,22 @@ function UserProvider({ children }) {
     }
 
     async function postUser({ username, password, email, secretCode }) {
-        const response = await create({ username, password, email, secretCode });
+        const response = await create({
+            username,
+            password,
+            email,
+            secretCode
+        });
         if (response.user) {
-            await loginUser({ username, password });
+            await loginUser({ email, password });
         }
         return response;
     }
 
     return (
-        <UserContext.Provider value={{ user, getUser, logoutUser, loginUser, postUser }}>
+        <UserContext.Provider
+            value={{ user, getUser, logoutUser, loginUser, postUser }}
+        >
             {children}
         </UserContext.Provider>
     );

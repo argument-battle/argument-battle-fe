@@ -16,7 +16,9 @@ const BattleInfo = ({ topic, userType, battleStatus }) => {
                 <Box fontWeight="bold">{topic} </Box>
             </Typography>
             <Typography variant="h5">
-                {isInLobby ? 'Laukiama priešininko...' : phrasesUserTypeMap[userType]}
+                {isInLobby
+                    ? 'Laukiama priešininko...'
+                    : phrasesUserTypeMap[userType]}
             </Typography>
         </Box>
     );

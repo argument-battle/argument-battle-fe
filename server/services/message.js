@@ -4,7 +4,11 @@ async function create(req, res) {
     const { content } = req.body;
     const { user, battle } = res.locals;
 
-    const message = new Message({ content, user: user._id, battle: battle._id });
+    const message = new Message({
+        content,
+        user: user._id,
+        battle: battle._id
+    });
 
     try {
         await message.save();

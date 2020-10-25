@@ -10,12 +10,21 @@ import {
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import useStyles from './styles/Input';
 
-const PasswordInput = ({ label, name = label, error, onChange, onBlur, value, required }) => {
+const PasswordInput = ({
+    label,
+    name = label,
+    error,
+    onChange,
+    onBlur,
+    value,
+    required
+}) => {
     const classes = useStyles();
 
     const [shouldShowPassword, setShouldShowPassword] = useState(false);
 
-    const toggleShouldShowPassword = () => setShouldShowPassword(!shouldShowPassword);
+    const toggleShouldShowPassword = () =>
+        setShouldShowPassword(!shouldShowPassword);
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -23,7 +32,12 @@ const PasswordInput = ({ label, name = label, error, onChange, onBlur, value, re
     }
 
     return (
-        <FormControl variant="outlined" fullWidth error={!!error} required={required}>
+        <FormControl
+            variant="outlined"
+            fullWidth
+            error={!!error}
+            required={required}
+        >
             <InputLabel htmlFor={name}>{label}</InputLabel>
             <OutlinedInput
                 id={name}
@@ -39,7 +53,11 @@ const PasswordInput = ({ label, name = label, error, onChange, onBlur, value, re
                             onMouseDown={toggleShouldShowPassword}
                             edge="end"
                         >
-                            {shouldShowPassword ? <Visibility /> : <VisibilityOff />}
+                            {shouldShowPassword ? (
+                                <Visibility />
+                            ) : (
+                                <VisibilityOff />
+                            )}
                         </IconButton>
                     </InputAdornment>
                 }
@@ -48,7 +66,9 @@ const PasswordInput = ({ label, name = label, error, onChange, onBlur, value, re
                 onBlur={e => onBlur(e.target.name)}
                 autoComplete="on"
             />
-            <FormHelperText className={classes.helperText}>{error}</FormHelperText>
+            <FormHelperText className={classes.helperText}>
+                {error}
+            </FormHelperText>
         </FormControl>
     );
 };

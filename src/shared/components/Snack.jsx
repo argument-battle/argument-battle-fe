@@ -62,11 +62,27 @@ const Snack = React.forwardRef(function Snack(props, ref) {
     };
 
     return (
-        <Card className={clsx(classes[variant], classes.container)} ref={ref} display="flex">
+        <Card
+            className={clsx(classes[variant], classes.container)}
+            ref={ref}
+            display="flex"
+        >
             <Icon className={clsx(classes.icon, classes.iconVariant)} />
-            <Typography classes={{ root: classes.message }}>{message}</Typography>
-            <IconButton aria-label="close" color="inherit" onClick={handleDismiss}>
-                <Close className={clsx(classes.icon, classes.iconVariant, classes.close)} />
+            <Typography classes={{ root: classes.message }}>
+                {message}
+            </Typography>
+            <IconButton
+                aria-label="close"
+                color="inherit"
+                onClick={handleDismiss}
+            >
+                <Close
+                    className={clsx(
+                        classes.icon,
+                        classes.iconVariant,
+                        classes.close
+                    )}
+                />
             </IconButton>
         </Card>
     );
@@ -79,7 +95,9 @@ const pushErrorMessageFactory = enqueueSnackbar => message => {
             horizontal: 'right'
         },
         content: function LoginSnack(key) {
-            return <Snack id={key} key={key} variant="error" message={message} />;
+            return (
+                <Snack id={key} key={key} variant="error" message={message} />
+            );
         }
     });
 };
@@ -91,7 +109,9 @@ const pushSuccessMessageFactory = enqueueSnackbar => message => {
             horizontal: 'right'
         },
         content: function LoginSnack(key) {
-            return <Snack id={key} key={key} variant="success" message={message} />;
+            return (
+                <Snack id={key} key={key} variant="success" message={message} />
+            );
         }
     });
 };

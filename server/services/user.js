@@ -4,55 +4,23 @@ const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
 const generateToken = require('../helpers/generateToken');
 
-async function getAll(req, res) {
-    const users = await User.find({}).populate({
-        path: 'debateclubs'
-    });
-    res.status(200).send({ users });
-}
-
-async function getMe(req, res) {
+async function getMe(_, res) {
     const userId = res.locals.user._id.toString();
     const user = await User.findById(userId)
-        .lean()
-        .populate({
-            path: 'battles'
-        })
-        .populate({
-            path: 'debateclubs'
-        });
-    const newBattles = user.battles.map(({ _id, topic, attacker, defender }) => {
-        const isDefender = userId === defender.toString();
-        const isAtacker = attacker && userId === attacker.toString();
-
-        let userType = 'spectator';
-        if (isDefender) {
-            userType = 'defender';
-        } else if (isAtacker) {
-            userType = 'attacker';
-        }
-
-        return { _id, topic, userType };
-    });
-    res.status(200).send({ user: { ...user, battles: newBattles } });
+        .populate({ path: 'debateClub', select: 'name' })
+        .lean();
+    res.status(200).send(user);
 }
 
-async function getGuest(req, res) {
+async function getGuest(_, res) {
     const username = 'Guest' + Math.floor(Math.random() * Math.floor(40000));
     const avatarUrl = gravatar.url(
         `${username}@argbattle.lt`,
         { size: '200', rating: 'x', default: 'robohash' },
-        false
+        true
     );
 
     res.status(200).send({ username, avatarUrl });
-}
-
-async function get(req, res) {
-    const id = req.params.id;
-    const { username, avatarUrl } = await User.findById(id);
-
-    res.status(200).send({ user: id, username, avatarUrl });
 }
 
 async function create(req, res) {
@@ -67,7 +35,7 @@ async function create(req, res) {
         const avatarUrl = gravatar.url(
             email,
             { size: '200', rating: 'x', default: 'robohash' },
-            false
+            true
         );
 
         const user = new User({
@@ -76,7 +44,12 @@ async function create(req, res) {
             avatarUrl,
             debateClub: debateClub._id
         });
+
         await user.save();
+
+        await DebateClub.findByIdAndUpdate(debateClub._id, {
+            $push: { members: user._id }
+        });
 
         res.status(201).send({ user });
     } catch (error) {
@@ -110,9 +83,9 @@ async function login(req, res) {
     }
 }
 
-async function logout(req, res) {
+async function logout(_, res) {
     res.clearCookie('user_token');
     res.status(200).send({ message: 'Success' });
 }
 
-module.exports = { getAll, getGuest, getMe, get, create, login, logout };
+module.exports = { getGuest, getMe, create, login, logout };
