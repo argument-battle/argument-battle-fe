@@ -1,27 +1,71 @@
 import React from 'react';
-import { Box } from '@material-ui/core';
-import { DIRECTION, oppositeDirectionMap } from './constants';
+import {
+    Card,
+    CardContent,
+    Typography,
+    Box,
+    IconButton,
+    CardHeader
+} from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
+import useStyles from './styles/ArgumentItem';
+import { postUpvote } from '../../services/Argument';
+import socket from '../../shared/socket';
+import { useParams } from 'react-router-dom';
 
-const ArgumentItem = ({ children, isOwner, isFirstTeam }) => {
+const ArgumentItem = ({
+    argument,
+    children,
+    isOwner,
+    isFirstTeam,
+    debate,
+    isSpectator
+}) => {
+    const isDebateNotActive = debate.status !== 'active';
+    const { rating, user, createdAt } = argument;
+    const styles = useStyles();
     const { palette } = useTheme();
-    const position = isOwner ? DIRECTION.LEFT : DIRECTION.RIGHT;
+    const { debateId } = useParams();
+
+    const handleClick = async () => {
+        await postUpvote({ argumentId: argument._id });
+        socket.emit('send argument', debateId);
+    };
+
     return (
         <Box
             maxWidth="60%"
-            padding="20px"
+            marginY="5%"
             bgcolor={
                 isFirstTeam ? palette.teamGreen.main : palette.teamRed.main
             }
-            marginLeft={isOwner ? 'auto' : ''}
-            border={1}
-            boxShadow={3}
-            marginY="10px"
-            textAlign={oppositeDirectionMap[position]}
-            width="fit-content"
-            overflow="hidden"
+            marginLeft={isOwner ? 'auto' : 'unset'}
         >
-            {children}
+            <Card className={styles.card}>
+                <CardHeader
+                    className={styles.header}
+                    action={
+                        !isDebateNotActive &&
+                        isSpectator && (
+                            <IconButton onClick={handleClick}>🖤</IconButton>
+                        )
+                    }
+                    title={user.username}
+                    subheader={
+                        <>
+                            <Box component="span">🖤{rating}</Box>
+                            <Box component="span" marginLeft="3%">
+                                {new Date(createdAt).toLocaleString()}
+                            </Box>
+                        </>
+                    }
+                />
+                <CardContent className={styles.content}>
+                    <Typography variant="h5" component="p">
+                        {children}
+                    </Typography>
+                </CardContent>
+            </Card>
         </Box>
     );
 };

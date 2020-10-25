@@ -62,13 +62,13 @@ const DebatePage = () => {
     const isSpectator =
         isModerator ||
         user.isGuest ||
-        debate.participatingClubs.some(e => e._id !== user.debateClub._id);
+        !debate.participatingClubs.some(e => e._id === user.debateClub._id);
 
     const hasDebateEnded = debate.status === 'ended';
 
     return (
         <Container component="main" className={classes.container}>
-            <ArgumentList debate={debate} />
+            <ArgumentList debate={debate} isSpectator={isSpectator} />
             {!isSpectator && !hasDebateEnded && !user.isGuest && (
                 <ArgumentInput
                     debateId={debate._id}

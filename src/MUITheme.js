@@ -12,7 +12,7 @@ const MUITheme = createMuiTheme({
             main: '#F2DEDE'
         },
         teamGreen: {
-            main: '#E6EFEB'
+            main: '#CBEEDB'
         },
         background: {
             paper: '#CBDCD7',

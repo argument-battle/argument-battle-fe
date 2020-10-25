@@ -100,7 +100,14 @@ async function getCurrentRoundArguments(req, res) {
             debate: debateId,
             status: 'active'
         })
-            .populate({ path: 'arguments', select: 'rating content user team' })
+            .populate({
+                path: 'arguments',
+                select: 'rating content user team createdAt',
+                populate: {
+                    path: 'user',
+                    select: 'username'
+                }
+            })
             .lean();
         const args = rounds.map(e => e.arguments).flat();
         res.status(200).send(args);
@@ -133,10 +140,35 @@ async function addArg(req, res) {
     }
 }
 
+async function upvoteArgument(req, res) {
+    const { debateId } = req.params;
+    const { content } = req.body;
+    const user = res.locals.user._id;
+    try {
+        const team = await Team.findOne({
+            debate: debateId,
+            members: user
+        });
+        const argument = await Argument.create({
+            content,
+            user,
+            team: team._id
+        });
+        await Round.findOneAndUpdate(
+            { debate: debateId, status: 'active' },
+            { $push: { arguments: argument._id } }
+        );
+        res.status(200).send({});
+    } catch (error) {
+        res.status(500).send({ error });
+    }
+}
+
 module.exports = {
     create,
     getById,
     joinTeam,
     getCurrentRoundArguments,
-    addArg
+    addArg,
+    upvoteArgument
 };

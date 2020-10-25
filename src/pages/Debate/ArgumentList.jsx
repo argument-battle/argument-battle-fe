@@ -13,7 +13,7 @@ import { UserContext } from '../../providers/user';
 import { getCurrentRoundArguments } from '../../services/Debate';
 import { useParams } from 'react-router-dom';
 
-const ArgumentList = ({ debate }) => {
+const ArgumentList = ({ debate, isSpectator }) => {
     const { debateId } = useParams();
     const [args, setArgs] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -63,13 +63,16 @@ const ArgumentList = ({ debate }) => {
 
     return (
         <Box flex={1} overflow="auto" ref={argumentListElRef}>
-            {args.map(({ content, user: argUser, team }, index) => (
+            {args.map(argument => (
                 <ArgumentItem
-                    key={index}
-                    isOwner={argUser === user._id}
-                    isFirstTeam={teamId === team}
+                    key={argument._id}
+                    isOwner={argument.user._id === user._id}
+                    isFirstTeam={teamId === argument.team}
+                    argument={argument}
+                    debate={debate}
+                    isSpectator={isSpectator}
                 >
-                    {content}
+                    {argument.content}
                 </ArgumentItem>
             ))}
         </Box>

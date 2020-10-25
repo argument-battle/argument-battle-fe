@@ -5,12 +5,6 @@ const argumentSchema = new mongoose.Schema(
     {
         content: String,
         rating: { type: Number, default: 0 },
-        raters: [
-            {
-                user: { type: ObjectId, ref: 'user' },
-                rating: Number
-            }
-        ],
         user: { type: ObjectId, ref: 'user' },
         team: { type: ObjectId, ref: 'team' }
     },
