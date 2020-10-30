@@ -16,7 +16,6 @@ import { useParams } from 'react-router-dom';
 const ArgumentList = ({ debate, isSpectator }) => {
     const { debateId } = useParams();
     const [args, setArgs] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
     const argumentListElRef = useRef(null);
     const { user } = useContext(UserContext);
 
@@ -36,24 +35,22 @@ const ArgumentList = ({ debate, isSpectator }) => {
         if (!debateId) {
             return;
         }
-        setIsLoading(true);
         const args = await getCurrentRoundArguments({ debateId });
         setArgs(args);
-        setIsLoading(false);
         scrollToEnd();
     }, [debateId]);
 
     useEffect(() => {
         getArguments();
-        socket.on('new argument', () => {
+        socket.on('arguments update', () => {
             getArguments();
         });
         return () => {
-            socket.off('new argument');
+            socket.off('arguments update');
         };
     }, [getArguments]);
 
-    if (!args || isLoading) {
+    if (!args) {
         return (
             <Box display="flex" flex={1}>
                 <Spinner />

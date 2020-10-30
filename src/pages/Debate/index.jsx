@@ -22,31 +22,33 @@ const DebatePage = () => {
     const [debate, setDebate] = useState(null);
     const { user } = useContext(UserContext);
 
-    const [isLoading, setIsLoading] = useState(false);
-
     const fetchDebate = useCallback(async () => {
-        setIsLoading(true);
+        window.startDebate = () => {
+            socket.emit('start debate', debateId);
+        };
         const debate = await getDebate({ id: debateId });
-        setIsLoading(false);
         setDebate(debate);
     }, [debateId]);
 
     useEffect(() => {
-        fetchDebate();
-        socket.emit('join debate', debateId);
         socket.on('debate update', () => {
             fetchDebate();
         });
+        socket.emit('join debate', debateId);
         return () => {
+            socket.off('debate update');
             socket.emit('leave debate', debateId);
-            socket.off('battle update');
         };
     }, [debateId, fetchDebate]);
 
-    if (!debate || isLoading) {
+    if (!debate) {
         return <Spinner />;
-    } else if (!debate._id) {
+    }
+    if (!debate._id) {
         return <NotFound />;
+    }
+    if (debate.status === 'ended' && !debate.winnerTeam) {
+        return <h1>Debatai baigėsi lygiosiomis</h1>;
     }
 
     const isUserInATeam = user.activeDebates?.some(e => e._id === debate._id);

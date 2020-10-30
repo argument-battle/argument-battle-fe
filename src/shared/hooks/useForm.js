@@ -66,7 +66,6 @@ export default function useForm(
             });
             return true;
         } catch (err) {
-            console.log(err.inner);
             err.inner.forEach(
                 ({ path, message }) => (inputs[path].error = message)
             );

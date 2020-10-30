@@ -29,7 +29,7 @@ const ArgumentItem = ({
 
     const handleClick = async () => {
         await postUpvote({ argumentId: argument._id });
-        socket.emit('send argument', debateId);
+        socket.emit('update argument', debateId);
     };
 
     return (

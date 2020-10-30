@@ -48,7 +48,7 @@ async function create(req, res) {
             }
         });
 
-        res.status(201); //.send(debate);
+        res.status(201).send(debate);
     } catch (error) {
         res.status(500).send({ error });
     }
@@ -164,11 +164,37 @@ async function upvoteArgument(req, res) {
     }
 }
 
+async function startDebate(debateId) {
+    try {
+        const debate = await Debate.findByIdAndUpdate(debateId, {
+            status: 'active',
+            startedAt: new Date()
+        });
+        return debate.rounds.length;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function endDebate(debateId) {
+    try {
+        await Debate.findByIdAndUpdate(debateId, {
+            status: 'ended',
+            endedAt: new Date()
+            //winnerTeam
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     create,
     getById,
     joinTeam,
     getCurrentRoundArguments,
     addArg,
-    upvoteArgument
+    upvoteArgument,
+    startDebate,
+    endDebate
 };

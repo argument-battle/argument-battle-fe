@@ -3,13 +3,14 @@ import { Box, Button } from '@material-ui/core';
 import { FormHeader } from '../../shared/components/Form/FormHeader';
 import { joinTeam } from '../../services/Debate';
 import { UserContext } from '../../providers/user';
+import socket from '../../shared/socket';
 
 const TeamSelect = ({ debate }) => {
     const { getUser } = useContext(UserContext);
     const teams = debate.teams;
-    console.log(teams);
 
     const handleClick = team => async () => {
+        socket.emit('join debate team', debate._id);
         await joinTeam({ debateId: debate._id, teamId: team._id });
         await getUser();
     };
