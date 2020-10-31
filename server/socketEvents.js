@@ -26,7 +26,7 @@ function socketEvents(io) {
 
         socket.on('start debate', async debateId => {
             const roundCount = await startDebate(debateId);
-            const waitTime = 10_000;
+            const waitTime = 60_000;
             const roundPromises = [...Array(roundCount)].map(async (_, i) => {
                 await delay(i * waitTime);
                 await endActiveRounds(debateId);
