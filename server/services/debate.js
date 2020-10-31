@@ -78,6 +78,37 @@ async function getById(req, res) {
     }
 }
 
+async function getAll(req, res) {
+    const { pageSize = 10, page, topic } = req.query;
+    const pageSizeNum = Number(pageSize);
+    const pageNum = Number(page) - 1;
+    try {
+        const findBy = { topic: { $regex: topic || '', $options: 'i' } };
+        const totalCount = await Debate.countDocuments(findBy);
+
+        if (!page) {
+            const debates = await Debate.find(findBy).sort({
+                createdAt: 'desc'
+            });
+            return res
+                .status(200)
+                .send({ totalCount: debates.length, debates });
+        }
+
+        const debates = await Debate.find(findBy)
+
+            .sort({ createdAt: 'desc' })
+            .limit(pageSizeNum)
+            .skip(pageSizeNum * pageNum);
+
+        let totalPages = Math.round(totalCount / pageSizeNum);
+        totalPages = totalPages === 0 ? 1 : totalPages;
+        res.status(200).send({ totalCount, totalPages, debates });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 async function joinTeam(req, res) {
     const { debateId, teamId } = req.params;
     const userId = res.locals.user._id;
@@ -197,5 +228,6 @@ module.exports = {
     addArg,
     upvoteArgument,
     startDebate,
-    endDebate
+    endDebate,
+    getAll
 };

@@ -10,7 +10,7 @@ import { postDebate } from '../../../services/Debate';
 import { useHistory } from 'react-router-dom';
 import { PAGE_PATHS } from '../../../Router';
 
-const CreateBattleForm = () => {
+const CreateDebateForm = () => {
     const { getUser } = useContext(UserContext);
     const [
         inputs,
@@ -89,4 +89,4 @@ const CreateBattleForm = () => {
     );
 };
 
-export { CreateBattleForm };
+export { CreateDebateForm };

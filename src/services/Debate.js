@@ -39,10 +39,19 @@ const getCurrentRoundArguments = async ({ debateId }) => {
     return await response.json();
 };
 
+const getAllDebates = async (params = {}) => {
+    var query = Object.keys(params)
+        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+        .join('&');
+    const response = await fetch(`/api/debates${query ? `?${query}` : ''}`);
+    return await response.json();
+};
+
 export {
     postDebate,
     getDebate,
     joinTeam,
     postArgument,
-    getCurrentRoundArguments
+    getCurrentRoundArguments,
+    getAllDebates
 };

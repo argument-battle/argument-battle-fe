@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { LayoutDataContext } from '../../layout';
 import { Container } from '@material-ui/core';
-import { CreateBattleForm } from './components/CreateBattleForm';
+import { CreateDebateForm } from './components/CreateDebateForm';
 import useStyles from './styles/CreatePage';
 
 const CreatePage = ({ history }) => {
@@ -11,7 +11,7 @@ const CreatePage = ({ history }) => {
     useEffect(() => initializeLayout(), [initializeLayout]);
     return (
         <Container component="main" maxWidth="sm" className={classes.container}>
-            <CreateBattleForm routerHistory={history} />
+            <CreateDebateForm routerHistory={history} />
         </Container>
     );
 };

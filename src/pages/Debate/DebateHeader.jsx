@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 
 const DebateHeader = ({ debate, isModerator }) => {
     const { topic, rounds, status, winnerTeam } = debate;
+    const capitalizedTopic = topic.charAt(0).toUpperCase() + topic.slice(1);
     const { debateId } = useParams();
     const roundNum = rounds.reduce((prev, curr) => {
         return curr.status === 'ended' ? ++prev : prev;
@@ -65,7 +66,7 @@ const DebateHeader = ({ debate, isModerator }) => {
                 </Box>
                 <Box display="flex" justifyContent="space-between" width="100%">
                     <Typography variant="h4" component="span">
-                        {topic}
+                        {capitalizedTopic}
                     </Typography>
                     <Typography variant="h4" component="span">
                         {roundNum}/{rounds.length}

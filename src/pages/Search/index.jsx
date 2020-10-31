@@ -5,8 +5,7 @@ import { Search } from './components/Search';
 
 const SearchPage = ({ location, history: routerHistory }) => {
     const { initializeLayout } = useContext(LayoutDataContext);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    useEffect(() => initializeLayout(), []);
+    useEffect(() => initializeLayout(), [initializeLayout]);
 
     return (
         <Container component="main">

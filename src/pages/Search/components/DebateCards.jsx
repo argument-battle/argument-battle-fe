@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, Typography } from '@material-ui/core';
-import { BattleCard } from './BattleCard';
+import { DebateCard } from './DebateCard';
 
-const BattleCards = ({ routerHistory, battles, totalPages }) => (
+const DebateCards = ({ routerHistory, debates, totalPages }) => (
     <Box flexGrow={1} overflow="auto" height="100%" width="100%">
         {totalPages ? (
-            battles.map((battle, i) => (
-                <BattleCard key={i} {...{ battle, routerHistory }} />
+            debates.map((debate, i) => (
+                <DebateCard key={i} {...{ debate, routerHistory }} />
             ))
         ) : (
             <Box textAlign="center">
@@ -16,4 +16,4 @@ const BattleCards = ({ routerHistory, battles, totalPages }) => (
     </Box>
 );
 
-export { BattleCards };
+export { DebateCards };

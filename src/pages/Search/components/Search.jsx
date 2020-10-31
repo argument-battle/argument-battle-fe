@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
-import { getAllBattles } from '../../../services/Battle';
+import { getAllDebates } from '../../../services/Debate';
 import { NotFoundPage } from '../../NotFound';
-import { BattleCards } from './BattleCards';
+import { DebateCards } from './DebateCards';
 import { SearchInput } from './SearchInput';
 import { Pagination } from './Pagination';
 
@@ -12,31 +12,30 @@ const Search = ({ location, routerHistory }) => {
     const pageSize = Number(params.get('pageSize') || 10);
     const topic = params.get('topic');
 
-    const [battles, setBattles] = useState([]);
+    const [debates, setDebates] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
 
-    const _getAllBattles = async () => {
+    const _getAllDebates = useCallback(async () => {
         let isUnmounted = false;
         let queryParams = { page, pageSize };
         if (topic) {
             queryParams.topic = topic;
         }
-        const { battles = [], totalPages = 10 } = await getAllBattles(
+        const { debates = [], totalPages = 10 } = await getAllDebates(
             queryParams
         );
         if (!isUnmounted) {
-            setBattles(battles);
+            setDebates(debates);
             setTotalPages(totalPages);
         }
         return () => {
             isUnmounted = true;
         };
-    };
+    }, [page, pageSize, topic]);
 
     useEffect(() => {
-        _getAllBattles();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, pageSize, topic]);
+        _getAllDebates();
+    }, [_getAllDebates]);
 
     return page > totalPages && totalPages !== 0 ? (
         <NotFoundPage />
@@ -48,7 +47,7 @@ const Search = ({ location, routerHistory }) => {
             height="100%"
         >
             <SearchInput {...{ location, routerHistory, topic }} />
-            <BattleCards {...{ routerHistory, battles, totalPages }} />
+            <DebateCards {...{ routerHistory, debates, totalPages }} />
             <Pagination {...{ location, page, totalPages }} />
         </Box>
     );

@@ -1,6 +1,6 @@
 const getUserMiddleware = require('./getUserMiddleware');
 
-const authBattleParticipantMiddleware = [
+const isModeratorMiddleware = [
     getUserMiddleware,
     async (_, res, next) => {
         const { user } = res.locals;
@@ -12,4 +12,4 @@ const authBattleParticipantMiddleware = [
     }
 ];
 
-module.exports = authBattleParticipantMiddleware;
+module.exports = isModeratorMiddleware;

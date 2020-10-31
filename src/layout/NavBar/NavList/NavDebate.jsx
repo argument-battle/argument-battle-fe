@@ -2,7 +2,7 @@ import React from 'react';
 import { ListItemText, ListItem } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { PAGE_PATHS } from '../../../Router';
-import useStyles from '../styles/ActiveBattle';
+import useStyles from '../styles/ActiveDebate';
 
 const NavDebate = ({ debate }) => {
     const classes = useStyles();
