@@ -7,6 +7,8 @@ import validationSchema from '../validationSchema';
 import { UserContext } from '../../../providers/user';
 import { getDebateClubs } from '../../../services/DebateClub';
 import { postDebate } from '../../../services/Debate';
+import { useHistory } from 'react-router-dom';
+import { PAGE_PATHS } from '../../../Router';
 
 const CreateBattleForm = () => {
     const { getUser } = useContext(UserContext);
@@ -19,6 +21,7 @@ const CreateBattleForm = () => {
     );
     const [clubs, setClubs] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const routerHistory = useHistory();
 
     const fetchDebateClubs = async () => {
         setClubs(await getDebateClubs());
@@ -38,9 +41,10 @@ const CreateBattleForm = () => {
 
         setIsSubmitting(true);
         const values = getValues();
-        await postDebate(values);
+        const debate = await postDebate(values);
         await getUser();
         setIsSubmitting(false);
+        routerHistory.push(`${PAGE_PATHS.DEBATE}/${debate._id}`);
     };
 
     const { topic, debateClub, roundCount } = inputs;

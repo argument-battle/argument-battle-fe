@@ -11,6 +11,7 @@ import useStyles from './styles/DebatePage';
 import { ArgumentInput } from './ArgumentInput';
 import { ArgumentList } from './ArgumentList';
 import socket from '../../shared/socket';
+import { DebateHeader } from './DebateHeader';
 
 const DebatePage = () => {
     const classes = useStyles();
@@ -23,9 +24,6 @@ const DebatePage = () => {
     const { user } = useContext(UserContext);
 
     const fetchDebate = useCallback(async () => {
-        window.startDebate = () => {
-            socket.emit('start debate', debateId);
-        };
         const debate = await getDebate({ id: debateId });
         setDebate(debate);
     }, [debateId]);
@@ -47,9 +45,6 @@ const DebatePage = () => {
     if (!debate._id) {
         return <NotFound />;
     }
-    if (debate.status === 'ended' && !debate.winnerTeam) {
-        return <h1>Debatai baigėsi lygiosiomis</h1>;
-    }
 
     const isUserInATeam = user.activeDebates?.some(e => e._id === debate._id);
     const isModerator = debate.creator._id === user._id;
@@ -69,7 +64,12 @@ const DebatePage = () => {
     const hasDebateEnded = debate.status === 'ended';
 
     return (
-        <Container component="main" className={classes.container}>
+        <Container
+            component="main"
+            className={classes.container}
+            disableGutters={true}
+        >
+            <DebateHeader debate={debate} isModerator={isModerator} />
             <ArgumentList debate={debate} isSpectator={isSpectator} />
             {!isSpectator && !hasDebateEnded && !user.isGuest && (
                 <ArgumentInput

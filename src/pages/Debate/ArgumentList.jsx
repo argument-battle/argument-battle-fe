@@ -59,7 +59,7 @@ const ArgumentList = ({ debate, isSpectator }) => {
     }
 
     return (
-        <Box flex={1} overflow="auto" ref={argumentListElRef}>
+        <Box flex={1} overflow="auto" ref={argumentListElRef} paddingX={'2%'}>
             {args.map(argument => (
                 <ArgumentItem
                     key={argument._id}

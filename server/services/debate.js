@@ -67,8 +67,9 @@ async function getById(req, res) {
                 }
             })
             .populate({ path: 'participatingClubs', select: 'name' })
-            .populate({ path: 'rounds', select: 'status arguments' })
+            .populate({ path: 'rounds', select: 'status arguments startedAt' })
             .populate({ path: 'creator', select: 'username' })
+            .populate({ path: 'winnerTeam', select: 'name' })
             .lean();
 
         res.status(200).send(debate);
