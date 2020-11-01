@@ -82,6 +82,11 @@ const DebateHeader = ({ debate, isModerator }) => {
                         🎉{winnerTeam.name} komanda laimėjo!
                     </Typography>
                 )}
+                {debate.status === 'ended' && !winnerTeam && (
+                    <Typography variant="h4" component="span">
+                        🤷‍♂️ Debatai pasibaigė lygiosiomis!
+                    </Typography>
+                )}
                 {debate.status === 'inactive' && (
                     <Typography variant="h4" component="span">
                         Debatai dar neprasidėjo
