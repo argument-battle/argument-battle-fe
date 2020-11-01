@@ -10,8 +10,6 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 
-const isProd = process.env.NODE_ENV === 'production';
-
 mongoose.connect(process.env.DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -20,14 +18,21 @@ mongoose.connect(process.env.DB_URL, {
 });
 
 const entryFiles = path.join(__dirname, '../public/index.html');
-const bundler = new Bundler(entryFiles, { sourceMaps: !isProd });
 
 app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api', router);
 
-app.use(bundler.middleware());
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('dist'));
+    app.get('*', (_, res) =>
+        res.sendFile(path.join(__dirname, '../dist/index.html'))
+    );
+} else {
+    const bundler = new Bundler(entryFiles, { detailedReport: true });
+    app.use(bundler.middleware());
+}
 
 socketEvents(io);
 
